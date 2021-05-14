@@ -1,0 +1,235 @@
+{% extends 'myapp/base.html' %} <!-- Add this for inheritance -->
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome Home</title>
+</head>
+<body>
+  {% block content %}
+
+  <div class="content-header">
+    <div class="container-fluid">
+    </div>
+  </div>
+
+  <section class="content">
+    <div class="container-fluid">
+      <!-- Info boxes -->
+      <div class="row">
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="info-box">
+            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Total newsevent</span>
+              <span class="info-box-number">
+               2 
+                <!-- <small>%</small> -->
+              </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="info-box mb-3">
+            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Active newsevent</span>
+              <span class="info-box-number">1</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="info-box mb-3">
+            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">In-Active newsevent</span>
+              <span class="info-box-number">1</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+
+
+
+      </div>
+      <!-- /.row -->
+      </div>
+  </section>
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <!-- <h1>Profile</h1> -->
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="">CMS</a></li>
+            <li class="breadcrumb-item active"><a href="{% url 'contactusdetail' %}">ContactUs</a></li>
+            <li class="breadcrumb-item active">Update contactus</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+    <!-- {{request.user.username}} -->
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <!-- <h3 class="card-title">DataTable with minimal features & hover style</h3> -->
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <form role="form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="form-group col-sm-4">
+                          <label for="exampleInputEmail1">Name</label>
+                          <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" value="{{contactus.name}}">
+                        </div>
+                        <div class="form-group col-sm-4">
+                          <label for="exampleInputEmail1">E-mail</label>
+                          <input type="email" class="form-control" id="email" name="email" placeholder="Enter E-mail" value="{{contactus.email}}">
+                        </div>
+                        <div class="form-group col-sm-4">
+                          <label>Active</label>
+                          <select class="form-control" name="is_active" data-placeholder="Select a State" style="width: 100%;">
+                          {% if contactus.is_active == True %}
+                              <option value="{{contactus.is_active}}">Yes</option>
+                              <option value="False">No</option>
+                          {% elif contactus.is_active == False %}
+                              <option value="{{contactus.is_active}}">No</option>
+                              <option value="True">Yes</option>
+                          {% else %}
+                            <option>---Select Active---</option>
+                            <option value="True">Yes</option>
+                            <option value="False">No</option>
+                          {% endif %}
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col-sm-4">
+                          <label for="exampleInputEmail1">Mobile</label>
+                          <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Enter Mobile Number" value="{{contactus.mobile}}">
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="inputState">Start Date</label>
+                            <select id="inputState" class="form-control" name="start_day">
+                              <option selected>{{contactus.start_day}}</option>
+                              <option value="sunday">Sunday</option>
+                              <option value="monday">Monday</option>
+                              <option value="tuesday">Tuesday</option>
+                              <option value="wednesday">Wednesday</option>
+                              <option value="thursday">Thursday</option>
+                              <option value="friday">Friday</option>
+                              <option value="saturday">Saturday</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-4">
+                          <label for="inputState">End Date</label>
+                          <select id="inputState" class="form-control" name="end_day">
+                            <option selected>{{contactus.end_day}}</option>
+                            <option value="sunday">Sunday</option>
+                            <option value="monday">Monday</option>
+                            <option value="tuesday">Tuesday</option>
+                            <option value="wednesday">Wednesday</option>
+                            <option value="thursday">Thursday</option>
+                            <option value="friday">Friday</option>
+                            <option value="saturday">Saturday</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col-md-4">
+                          <label for="inputState">Start Time: </label>
+                          <input type="time" id="start_time" name="start_time" value="{{contactus.start_time}}">
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="inputState">End Time: </label>
+                          <input type="time" id="end_time" name="end_time" value="{{contactus.end_time}}">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col-sm-6">
+                          <label for="email">Image</label>
+                          <input type="file" class="form-control" id="image" name="image" value="{{contactus.image.url}}">
+                          {% if contactus %}
+                          <img class="profile-user-img img-fluid img-circle"
+                            src="{{contactus.image.url}}"
+                            alt="User profile picture">
+                          {% endif %}
+                        </div>
+                      </div>
+                      <!-- <div class="form-group">
+                        <label for="exampleInputEmail1">Map</label>
+                        <iframe width="600" height="450" style="border:0" loading="lazy"
+                            allowfullscreen src="https://www.google.com/maps/embed/v1/place?key=API_KEY
+                            &q=Space+Needle,Seattle+WA"></iframe>
+                      </div> -->
+                      <div class="row">
+                        <div class="form-group col-sm-6" hidden>
+                          <label for="email" class="col-sm-3 col-form-label">Created By</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" id="email" name="created_by" placeholder="Email" value="{% if contactus.created_by %} {{contactus.created_by}} {% else %} {{request.user.user_id}} {% endif %}">
+                          </div>
+                        </div>
+                        <div class="form-group col-sm-6" hidden>
+                          <label for="email" class="col-sm-3 col-form-label">Modified By</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" id="email" name="modified_by" placeholder="Email" value="{{request.user.user_id}}">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.card-body -->
+    
+                    <div class="card-footer">
+                      <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                  </form>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+  <!-- /.content -->
+  {% endblock %}
+
+  {% block js %}
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+  <script>
+    $(function () {
+      // Summernote
+      $('.textarea').summernote()
+    })
+  </script>
+  
+  {% endblock %}
+</body>
+</html>
+

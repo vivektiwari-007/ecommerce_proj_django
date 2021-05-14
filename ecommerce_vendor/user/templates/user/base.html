@@ -1,0 +1,345 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>Uniclog Ecommerce Html Template</title>
+    <meta name="author" content="Themextra">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <!--================= site favicon icon =================-->
+    <link rel="shortcut icon" type="image/png" href="{% static 'user/assets/images/favicon.ico' %}">
+    <!--================= fontawesome icon css link =================-->
+    <link rel="stylesheet" href="{% static 'user/assets/css/all.min.css' %}">
+    <!--================= bootstrap css link =================-->
+    <link rel="stylesheet" href="{% static 'user/assets/css/bootstrap.min.css' %}">
+    <!--================= fancybox css link =================-->
+    <link rel="stylesheet" href="{% static 'user/assets/css/jquery.fancybox.min.css' %}"> 
+    <!--================= slick css link =================-->
+    <link rel="stylesheet" href="{% static 'user/assets/css/slick.css' %}">
+    <!--================= main style css link =================-->
+    <link rel="stylesheet" href="{% static 'user/assets/css/style.css' %}" id="color">
+
+</head>
+<body>
+
+
+    <!--================= preloader start =================-->
+    <div id="preloader"></div>
+    <!--================= preloader end =================-->
+
+    <!--================= Popupwindow start =================-->
+    <div id="newsletter-popup" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-12 mt-auto mb-auto">
+                      <div class="left">
+                          <h2>NewsLetter</h2>
+                          <p>Subscribe to the Makali mailing list to receive updates on new arrivals, special offers and other 
+                          discount information.</p>
+                              <div class="newsletter mt4 mb-4">
+                                  <input type="text" name="newsletter" class="form-control" placeholder="Enter email">
+                                  <button class="tx-ctm-btn"><i class="fas fa-paper-plane"></i></button>
+                              </div>
+                          <div class="customcheckbox">
+                              <input type="checkbox" id="popupmsg">
+                              <label for="popupmsg">Don't show this popup again</label>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="popup-close" data-dismiss="modal"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+    </div>
+    <!--================= Popupwindow end =================-->
+
+    <!--================= theme-feature start =================-->
+    <div class="theme-feature">
+      <button type="button"><i class="fa fa-cog"></i></button>
+      <div class="theme-version-area">
+        <div class="col-12">
+          <div class="theme-bg-version row justify-content-between">
+            <div class="col-6 p-2 dark-vesion size-box">Dark</div>
+            <div class="col-6 p-2 light-vesion size-box">Light</div>
+          </div> 
+          <div class="theme-color-option row justify-content-between mt-3">
+            <h5 class="col-12 title">Color option</h5>
+            <ul class="theme-colors">
+                <li class="active"><a href="javascript:void(0);" class="color1 colorchange"><i class="fas fa-check"></i></a></li>
+                <li><a href="javascript:void(0);" class="color2 colorchange"><i class="fas fa-check"></i></a></li>
+                <li><a href="javascript:void(0);" class="color3 colorchange"><i class="fas fa-check"></i></a></li>
+                <li><a href="javascript:void(0);" class="color4 colorchange"><i class="fas fa-check"></i></a></li>
+                <li><a href="javascript:void(0);" class="color5 colorchange"><i class="fas fa-check"></i></a></li>
+                <li><a href="javascript:void(0);" class="color6 colorchange"><i class="fas fa-check"></i></a></li>
+                <li><a href="javascript:void(0);" class="color7 colorchange"><i class="fas fa-check"></i></a></li>
+                <li><a href="javascript:void(0);" class="color8 colorchange"><i class="fas fa-check"></i></a></li>
+                <li><a href="javascript:void(0);" class="color9 colorchange"><i class="fas fa-check"></i></a></li>
+                <li><a href="javascript:void(0);" class="color10 colorchange"><i class="fas fa-check"></i></a></li>
+            </ul>
+          </div>  
+        </div>          
+      </div>   
+    </div>
+    <!--================= theme-feature end =================-->
+    
+    <!--================= header-section start =================-->
+    <header class="header-section">
+        <div class="header-banner">
+          <div class="container">
+            <nav class="navbar navbar-expand-xl">
+              <a class="site-logo site-title" href="index.html"><img src="{% static 'user/assets/images/logo.png' %}" alt="site-logo"></a>
+              <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="menu-toggle"></span>
+              </button>   
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav main-menu ml-auto">
+                  <li class=""><a href="{% url 'userindex' %}">Home</a>
+                  </li>
+                   <li class="menu_has_children"><a href="#">Category</a>
+                    <ul class="sub-menu">
+                      <li><a href="category.html">Category</a></li>
+                      <li><a href="category-right.html">Category Right</a></li>
+                      <li><a href="category-full-width.html">Category Full Width</a></li>
+                      <li><a href="checkout.html">Checkout</a></li>
+                      <li><a href="order.html">Order</a></li>
+                      <li><a href="{% url 'product_detail' %}">Product Detail</a></li>
+                    </ul>
+                  </li>
+                  <li class="menu_has_children"><a href="#">Blog</a>
+                    <ul class="sub-menu">
+                      <li><a href="blog-grid.html">Blog Grid</a></li>
+                      <li><a href="blog-grid-three.html">Blog Three column</a></li>
+                      <li><a href="blog-single.html">Single Blog</a></li>
+                      <li><a href="blog-right.html">Blog Right</a></li>
+                      <li><a href="blog-list-view.html">Blog List View</a></li>
+                      <li><a href="blog-detail.html">Blog Detail</a></li>
+                    </ul>
+                  </li>
+                  <li class="menu_has_children"><a href="#">Pages</a>
+                    <ul class="sub-menu">
+                      <li><a href="about-us.html">About Us</a>
+                      <li><a href="login.html">Login</a>
+                      <li><a href="faq.html">FAQ</a></li>
+                      <li><a href="404.html">404 Page</a></li>
+                      <li><a href="my-account.html">My Account</a>
+                    </ul>
+                  </li>
+                  <li><a href="contact-us.html">Contact Us</a></li>
+                </ul>              
+              </div>                                             
+            </nav>
+          </div>   
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="header-top col-12">
+                <div class="row">
+                    <div class="verticle-menu"> 
+                      <nav class='animated bounceInDown'>
+                      <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarVerticleSupportedContent" aria-controls="navbarVerticleSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="menu-toggle"><i class="fas fa-list"></i>Catgories</span>
+                                    </button>   
+                                    <div class="collapse navbar-collapse" id="navbarVerticleSupportedContent">
+                                    <ul>
+                                      <li><a href='#'>Profile</a></li>
+                                      <li><a href='#'>Messages</a></li>
+                                      <li class='sub-menu'><a href='#'>Settings<div class='fas fa-plus right'></div></a>
+                                        <ul>
+                                          <li><a href='#'>Account</a></li>
+                                          <li><a href='#'>Profile</a></li>
+                                          <li><a href='#'>Secruity &amp; Privacy</a></li>
+                                          <li><a href='#'>Password</a></li>
+                                          <li><a href='#'>Notification</a></li>
+                                        </ul>
+                                      </li>
+                                      <li class='sub-menu'><a href='#'>Help<div class='fas fa-plus right'></div></a>
+                                        <ul>
+                                          <li><a href='#'>FAQ's</a></li>
+                                          <li><a href='#'>Submit a Ticket</a></li>
+                                          <li><a href='#'>Network Status</a></li>
+                                        </ul>
+                                      </li>
+                                      <li><a href='#'>Logout</a></li>
+                                    </ul>           
+                                    </div>                          
+
+                      </nav>
+                     </div>
+                    <div class="search-block">            
+                      <div class="header-search-block">
+                            <div class="search-container">
+                              <form>
+                                <input type="text" name="q" id="search-terms" placeholder="Search terms..." />
+                                <button type="submit" name="submit" value="Go" class="search-icon"><i class="fas fa-fw fa-search"></i></button>
+                              </form>
+                            </div>
+                      </div> 
+                    </div>
+                    <div class="d-flex headericon">
+                        <div class="my-account"> 
+                        	{{request.user.username}}
+                          <a href="#" class="user"><i class="fas fa-user"></i></a>
+                           {% if request.user.is_authenticated %}
+                           <ul class="dropdown">
+                             <li><a href="{% url 'userlogout' %}">Logout</a></li>
+                           </ul>
+                           {% else %}
+                           <ul class="dropdown">
+                             <li><a href="{% url 'userregister' %}">Sign Up</a></li>&nbsp;&nbsp;&nbsp;&nbsp;
+                             <li><a href="{% url 'userlogin' %}">Sign In</a></li>
+                           </ul>
+                           {% endif %}
+                        </div> 
+                        <div class="wishlist">
+                          <a href="#">
+                            <i class="fas fa-heart"></i>
+                          </a>
+                        </div>                                                     
+                        <div class="cart-block">
+                          <a href="#">
+                            <i class="fas fa-shopping-basket"></i>
+                            <span class="count">2</span>
+                          </a>   
+                        </div>   
+
+                    </div> 
+                </div>
+            </div>                     
+          </div> 
+        </div> 
+    </header>
+    <!--================= header-section end =================-->
+    {% block content %}
+
+    {% endblock %}
+             
+    <!--================= Instagram section end =================-->   
+    
+    <!--================= Footer section start =================-->
+    <footer>
+        <!-- footer bottom start -->
+        <div class="footer-top-social">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <span>Follow us:</span>
+                <ul class="social-media">
+                  <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
+                  <li><a href="#" class="twitter"><i class="fab fa-twitter"></i></a></li>
+                  <li><a href="#" class="insta"><i class="fab fa-instagram"></i></a></li>
+                  <li><a href="#" class="youtube"><i class="fab fa-youtube"></i></a></li>
+                  <li><a href="#" class="linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+                </ul> 
+              </div>             
+            </div>
+          </div>
+        </div>
+        <!-- footer bottom end -->      
+        <!-- footer top start -->
+        <div class="footer-top">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-4 col-md-6 col-12 footer-address mb-lg-0 mb-5">
+                <h2 class="footer-title">Contact Us</h2>
+                <ul>
+                  <li><span class="address-icon"><i class="fas fa-map-marker-alt"></i></span><span>7000, WhiteField, Manchester Highway, London. 401203</span></li>
+                  <li><span class="address-icon"><i class="fas fa-phone-alt"></i></span><a href="#">+91 1234567890</a></li>
+                  <li><span class="address-icon"><i class="fas fa-envelope-open"></i></span><a href="#">youremail@domain.com</a></li>
+                </ul>
+              </div>               
+              <div class="col-lg-2 col-md-6 col-12 footer-link-one mb-lg-0 mb-5">
+                <h2 class="footer-title">Information</h2>
+                <ul>
+                   <li><a href="index.html">Home</a></li>
+                  <li><a href="about-us.html">About Us</a></li>
+                  <li><a href="contact-us.html">Contact Us</a></li>
+                  <li><a href="blog-grid.html">Blog</a></li>
+                  <li><a href="blog-grid.html">FAQ</a></li>
+                </ul>
+              </div>
+              <div class="col-lg-2 col-md-6 col-12 footer-link-two mb-lg-0 mb-5">
+                <h2 class="footer-title">Quick Links</h2>
+                <ul>
+                   <li><a href="index.html">Home</a></li>
+                  <li><a href="about-us.html">About Us</a></li>
+                  <li><a href="contact-us.html">Contact Us</a></li>
+                  <li><a href="blog-grid.html">Blog</a></li>
+                  <li><a href="blog-grid.html">FAQ</a></li>
+                </ul>
+              </div>                         
+              <div class="col-lg-4 col-md-6 col-12 footer-newsletter mb-lg-0 mb-5">
+                <h2 class="footer-title">Newsletters</h2>
+                <p class="sub-title mb-4">Alteration in some form injected humor words which don't even slightly believable. If you are going.</p>
+                <div class="newsletter">
+                  <input type="text" name="newsletter" class="form-control" placeholder="Enter email">
+                  <button class="tx-ctm-btn"><i class="fas fa-paper-plane"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- footer top end -->
+
+          <!-- footer bottom start -->
+        <div class="container">
+          <div class="footer-bottom">
+              <div class="row">
+                <div class="copyright">
+                  <p>Copyright © 2020 Themextra. All rights reserved</p>
+                </div>              
+                <ul class="footer-payment">
+                    <li>
+                        <a href="#"><img src="{% static 'user/assets/images/visa.png' %}" alt="image"/></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="{% static 'user/assets/images/master.png' %}" alt="image"/></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="{% static 'user/assets/images/paypal.png' %}" alt="image"/></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="{% static 'user/assets/images/mastercard.png' %}" alt="image"/></a>
+                    </li>
+                </ul>              
+              </div>
+          </div>
+        </div>  
+          <!-- footer bottom end -->
+    </footer>
+    <!--================= Footer section end =================-->
+
+    <!--================= scroll-to-top start =================-->
+    <div class="scroll-to-top">
+      <span class="scroll-icon">
+        <i class="fas fa-angle-up"></i>
+      </span>
+    </div>
+    <!--================= scroll-to-top end =================-->
+  
+    <!--================= jquery js =================-->
+    <script src="{% static 'user/assets/js/jquery-3.3.1.min.js' %}"></script>
+    <!--================= zoom js =================-->
+    <script src="{% static 'user/assets/js/jquery.zoom.min.js' %}"></script>
+    <!--================= fontawesome js =================-->
+    <script src="{% static 'user/assets/js/all.min.js' %}"></script>
+    <!--================= bootstrap js =================-->
+    <script src="{% static 'user/assets/js/bootstrap.min.js' %}"></script>
+    <!--================= fancybox js =================-->
+    <script src="{% static 'user/assets/js/jquery.fancybox.min.js' %}"></script>
+    <!--================= circle js =================-->
+    <script src="{% static 'user/assets/js/circle-progress.js' %}"></script>      
+    <!--================= slick js =================-->
+    <script src="{% static 'user/assets/js/slick.min.js' %}"></script>
+    <!--================= pace.min js =================-->
+    <script src="{% static 'user/assets/js/pace.min.js' %}"></script>
+    <!--================= main script js =================-->
+    <script src="{% static 'user/assets/js/main.js' %}"></script>
+</body>
+
+</html>

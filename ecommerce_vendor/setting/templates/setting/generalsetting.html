@@ -1,0 +1,251 @@
+{% extends 'myapp/base.html' %} <!-- Add this for inheritance -->
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  {% block title %} Omtecweb Admin Panel | Profile {% endblock %}
+</head>
+<body>
+  {% block content %}
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Profile</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="">Setting</a></li>
+            <li class="breadcrumb-item active">General setting</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="card">
+    <div class="card-header p-2">
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">General Setting</a></li>
+        <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">Home Page Setting</a></li>
+      </ul>
+    </div><!-- /.card-header -->
+    <div class="card-body">
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab_1">
+          <section class="content">
+            <div class="container-fluid">
+                <div class="card">
+                    <div class="card-body">
+                      <div class="tab-content">
+                        <div class="active tab-pane" id="settings">
+                          {% for i in general %}
+                          <form class="form-horizontal" action="{% url 'generalsettingupdate' i.generalsetting_id %}" enctype="multipart/form-data" method="POST">{% csrf_token %}
+                            <div class="form-group row">
+                              <label for="email" class="col-sm-3 col-form-label">Store name</label>
+                              <div class="col-sm-9">
+                                <input type="text" class="form-control" id="name" name="name"  placeholder="Enter name" value="{{i.name}}">
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="email" class="col-sm-3 col-form-label">Store owner name</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control" id="owner_name" name="owner_name"  placeholder="Enter owner name" value="{{i.owner_name}}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="email" class="col-sm-3 col-form-label">Store Address</label>
+                                <div class="col-sm-9">
+                                  <textarea class="textarea" placeholder="Place some text here" name="store_address"
+                                  style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{i.store_address}}</textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                              <label for="email" class="col-sm-3 col-form-label">Country</label>
+                              <div class="col-sm-9">
+                                <select class="form-control" name="country_id" data-placeholder="Select a State" style="width: 100%;">
+                                  {% for c in contry %}
+                                    <option {% if i.country_id.country_id == c.country_id %} selected {% endif %} value="{{c.country_id}}">{{c.name}}</option>
+                                  {% endfor %}
+                                </select>  
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label for="email" class="col-sm-3 col-form-label">Zone</label>
+                              <div class="col-sm-9">
+                                <select class="form-control" name="zone_id" data-placeholder="Select a State" style="width: 100%;">
+                                  {% for z in zone %}
+                                    <option {% if i.zone_id.zone_id == z.zone_id %} selected {% endif %} value="{{z.zone_id}}">{{z.name}}</option>
+                                  {% endfor %}
+                                </select>  
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label for="email" class="col-sm-3 col-form-label">Language</label>
+                              <div class="col-sm-9">
+                                <select class="form-control" name="language_id" data-placeholder="Select a State" style="width: 100%;">
+                                  {% for l in language %}
+                                    <option {% if i.language_id.language_id == l.language_id %} selected {% endif %} value="{{l.language_id}}">{{l.name}}</option>
+                                  {% endfor %}
+                                </select>  
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label for="email" class="col-sm-3 col-form-label">Currency</label>
+                              <div class="col-sm-9">
+                                <select class="form-control" name="currency_id" data-placeholder="Select a State" style="width: 100%;">
+                                  {% for curr in currency %}
+                                      <option {% if i.currency_id.currency_id == curr.currency_id %} selected {% endif %} value="{{curr.currency_id}}">{{curr.title}}</option>
+                                  {% endfor %}
+                                </select>  
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label for="email" class="col-sm-3 col-form-label">Maintenance mode</label>
+                              <div class="col-sm-9">
+                                <select class="form-control" name="maintenance" data-placeholder="Select a State" style="width: 100%;">
+                                  <option {% if i.maintenance == True %} selected {% endif %} value="True">Yes</option>
+                                  <option {% if i.maintenance == False %} selected {% endif %} value="False">no</option>
+                                </select>  
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label for="email" class="col-sm-3 col-form-label">Store logo</label>
+                              <div class="col-sm-9">
+                                <input type="file" id="store_logo" name="store_logo">
+                                <image class="profile-user-img img-fluid img-circle" alt="User profile picture" src="{{i.store_logo.url}}"></image>
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label for="email" class="col-sm-3 col-form-label">Store email logo</label>
+                              <div class="col-sm-9">
+                                <input type="file" id="store_email_logo" name="store_email_logo">
+                                <image class="profile-user-img img-fluid img-circle" alt="User profile picture" src="{{i.store_email_logo.url}}"></image>
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label for="email" class="col-sm-3 col-form-label">Store invoice logo</label>
+                              <div class="col-sm-9">
+                                <input type="file" id="store_invoice_logo" name="store_invoice_logo">
+                                <image class="profile-user-img img-fluid img-circle" alt="User profile picture" src="{{i.store_invoice_logo.url}}"></image>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="form-group col-sm-4 form-group" hidden>
+                                  <label for="email" class="col-sm-3 col-form-label">Created By</label>
+                                  <input type="text" class="form-control" id="email" name="created_by" placeholder="Email" value="{% if i %} {{i.created_by}} {% else %} {{request.user.user_id}} {% endif %}">
+                                </div>
+                                <div class="form-group col-sm-4 form-group" hidden>
+                                  <label for="email" class="col-sm-3 col-form-label">Modified By</label>
+                                  <input type="text" class="form-control" id="email" name="modified_by" placeholder="Email" value="{{request.user.user_id}}">
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <div class="form-group row">
+                              <div class="offset-sm-3 col-sm-9">
+                                <button type="submit" class="btn btn-success">Update</button>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                <!-- /.col -->
+                </div>
+              <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </section>
+        </div>
+        <!-- /.tab-pane -->
+        <div class="tab-pane" id="tab_2">
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-body">
+                          <div class="tab-content">
+                            <div class="active tab-pane" id="settings">
+                              {% for i in homepage %}
+                              <form class="form-horizontal" action="{% url 'homepagesettingupdate' i.homepage_id %}" enctype="multipart/form-data" method="POST">{% csrf_token %}
+                                <div class="form-group row">
+                                  <label for="email" class="col-sm-3 col-form-label">Home title</label>
+                                  <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="title" name="title"  placeholder="Enter title" value="{{i.title}}">
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="email" class="col-sm-3 col-form-label">Home content</label>
+                                    <div class="col-sm-9">
+                                      <textarea class="textarea" placeholder="Place some text here" name="content"
+                                      style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{i.content}}</textarea>
+                                   </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="email" class="col-sm-3 col-form-label">Home image right</label>
+                                    <div class="col-sm-9">
+                                      <input type="file" id="image_right" name="image_right">
+                                      <image class="profile-user-img img-fluid img-circle" alt="User profile picture" src="{{i.image_right.url}}"></image>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label for="email" class="col-sm-3 col-form-label">Home image left</label>
+                                  <div class="col-sm-9">
+                                    <input type="file" id="image_left" name="image_left">
+                                    <image class="profile-user-img img-fluid img-circle" alt="User profile picture" src="{{i.image_left.url}}"></image>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label for="email" class="col-sm-3 col-form-label">Home subscribe title</label>
+                                  <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="subscribe_title" name="subscribe_title" placeholder="Enter subscribe title" value="{{i.subscribe_title}}">
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label for="email" class="col-sm-3 col-form-label">Home subscribe content</label>
+                                  <div class="col-sm-9">
+                                    <textarea class="textarea" placeholder="Place some text here" name="subscribe_content"
+                                    style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{i.subscribe_content}}</textarea>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label for="email" class="col-sm-3 col-form-label">Home subscribe image</label>
+                                  <div class="col-sm-9">
+                                    <input type="file" id="subscribe_image" name="subscribe_image">
+                                    <image class="profile-user-img img-fluid img-circle" alt="User profile picture" src="{{i.subscribe_image.url}}"></image>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="form-group col-sm-4 form-group" hidden>
+                                      <label for="email" class="col-sm-3 col-form-label">Created By</label>
+                                      <input type="text" class="form-control" id="email" name="created_by" placeholder="Email" value="{% if i %} {{i.created_by}} {% else %} {{request.user.user_id}} {% endif %}">
+                                    </div>
+                                    <div class="form-group col-sm-4 form-group" hidden>
+                                      <label for="email" class="col-sm-3 col-form-label">Modified By</label>
+                                      <input type="text" class="form-control" id="email" name="modified_by" placeholder="Email" value="{{request.user.user_id}}">
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                <div class="form-group row">
+                                  <div class="offset-sm-3 col-sm-9">
+                                    <button type="submit" class="btn btn-success">Update</button>
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                    <!-- /.col -->
+                    </div>
+                  <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </section>
+        </div>
+      </div>
+      <!-- /.tab-content -->
+    </div><!-- /.card-body -->
+  </div>
+  {% endblock %}
+</body>
+</html>
+

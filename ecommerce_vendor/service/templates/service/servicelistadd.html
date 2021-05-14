@@ -1,0 +1,181 @@
+{% extends 'myapp/base.html' %} <!-- Add this for inheritance -->
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome Home</title>
+</head>
+<body>
+  {% block content %}
+
+  <div class="content-header">
+    <div class="container-fluid">
+    </div>
+  </div>
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <!-- <h1>Profile</h1> -->
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="">Service</a></li>
+            <li class="breadcrumb-item active"><a href="{% url 'servicelistdetail' %}">Service List</a></li>
+            <li class="breadcrumb-item active">Add Service List</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+    <!-- {{request.user.username}} -->
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <!-- <h3 class="card-title">DataTable with minimal features & hover style</h3> -->
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <form role="form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="form-group col-sm-4">
+                          <label for="exampleInputEmail1">Service title</label>
+                          <input type="text" class="form-control" id="title" name="title" placeholder="Enter service title" value="{{servicelist.title}}">
+                        </div>
+                        <div class="form-group col-sm-4">
+                          <label for="exampleInputEmail1">Cost</label>
+                          <input type="text" class="form-control" id="cost" name="cost" placeholder="Enter service cost" value="{{servicelist.cost}}">
+                        </div>
+                        <div class="form-group col-sm-4">
+                          <label for="exampleInputEmail1">Phone number</label>
+                          <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Enter phone number" value="{{servicelist.phone_number}}">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col-sm-4">
+                          <label>Active</label>
+                          <select class="form-control" name="is_active" data-placeholder="Select a State" style="width: 100%;">
+                            <option>---Select Active---</option>
+                            <option {% if servicelist.is_active == True %} selected {% endif %} value="True">Yes</option>
+                            <option {% if servicelist.is_active == False %} selected {% endif %} value="False">No</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col-sm-6">
+                          <label for="email">Image</label>
+                          <input type="file" class="form-control" id="image" name="image" value="{{blog.image.url}}">
+                          {% if servicelist %}
+                          <img class="profile-user-img img-fluid img-circle"
+                            src="{{servicelist.image.url}}"
+                            alt="User profile picture">
+                          {% endif %}
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col-sm-8">
+                          <label for="exampleInputEmail1">Product Description</label>
+                          <textarea class="textarea" placeholder="Place some text here" name="product_description"
+                            style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{servicelist.product_description}}</textarea>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col-sm-6" hidden>
+                          <label for="email" class="col-sm-3 col-form-label">Created By</label>
+                          <input type="text" class="form-control" id="email" name="created_by" placeholder="Email" value="{% if servicelist.created_by %} {{servicelist.created_by}} {% else %} {{request.user.user_id}} {% endif %}">
+                        </div>
+                        <div class="form-group col-sm-6" hidden>
+                          <label for="email" class="col-sm-3 col-form-label">Modified By</label>
+                          <input type="text" class="form-control" id="email" name="modified_by" placeholder="Email" value="{{request.user.user_id}}">
+                        </div>
+                      </div>
+                    <!-- /.card-body -->
+                    <div class="card card-primary card-outline">
+                      <div class="card-header">
+                        <h3 class="card-title">
+                          <i class="fas fa-edit"></i>
+                          More Information
+                        </h3>
+                      </div>
+                      <div class="card-body">
+                        <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+                          <li class="nav-item">
+                            <a class="nav-link active" id="custom-content-below-home-tab" data-toggle="pill" href="#custom-content-below-category" role="tab" aria-controls="custom-content-below-home" aria-selected="true">Category</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="custom-content-below-profile-tab" data-toggle="pill" href="#custom-content-below-seo" role="tab" aria-controls="custom-content-below-data" aria-selected="false">SEO</a>
+                          </li>
+                        </ul>
+                        <div class="tab-content" id="custom-content-below-tabContent">
+                          <div class="tab-pane fade show active" id="custom-content-below-category" role="tabpanel" aria-labelledby="custom-content-below-home-tab"><br>
+                              <div class="row">
+                                  <div class="form-group col-sm-6">
+                                    <label>Service category</label>
+                                    <select class="form-control" name="category_id" data-placeholder="Select a State" style="width: 100%;">
+                                    <option>Select service category</option>
+                                    {% for i in sc %}
+                                      <option {% if servicelist.category_id.servicecategory_id == i.servicecategory_id %} selected {% endif %} value="{{i.servicecategory_id}}">{{i.name}}</option>
+                                    {% endfor %}
+                                    </select>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="tab-pane fade" id="custom-content-below-seo" role="tabpanel" aria-labelledby="custom-content-below-profile-tab"><br>
+                              <div class="row">
+                                  <div class="form-group col-sm-6">
+                                    <label for="exampleInputEmail1">Meta title</label>
+                                    <input type="text" class="form-control" id="title" name="meta_tag_title" placeholder="Enter meta Title" value="{{servicelist.meta_tag_title}}">
+                                  </div>
+                                  <div class="form-group col-sm-6">
+                                    <label for="exampleInputEmail1">Meta keyword</label>
+                                    <input type="text" class="form-control" id="title" name="meta_tag_keyword" placeholder="Enter meta keyword" value="{{servicelist.meta_tag_keyword}}">
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="form-group col-sm-8">
+                                    <label for="exampleInputEmail1">Meta discripation</label>
+                                    <textarea class="textarea" placeholder="Place some text here" name="meta_tag_description"
+                                      style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{servicelist.meta_tag_description}}</textarea>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                       </div>
+                       </div>
+                    <div class="card-footer">
+                      <button type="submit" class="btn btn-primary">{% if servicelist %}Update{% else %}Submit{% endif %}</button>
+                    </div>
+                  </form>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+  <!-- /.content -->
+  {% endblock %}
+
+  {% block js %}
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+  <script>
+    $(function () {
+      // Summernote
+      $('.textarea').summernote()
+    })
+  </script>
+  
+  {% endblock %}
+</body>
+</html>

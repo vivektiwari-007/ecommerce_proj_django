@@ -1,0 +1,86 @@
+{% extends 'myapp/base.html' %} <!-- Add this for inheritance -->
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome Home</title>
+</head>
+<body>
+  {% block content %}
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <!-- <h1>Profile</h1> -->
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="">Setting</a></li>
+            <li class="breadcrumb-item active">User Group Add</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+    <!-- {{request.user.username}} -->
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <!-- <h3 class="card-title">DataTable with minimal features & hover style</h3> -->
+                <a href="{% url 'usergroupadd' %}"><button>Add Group User</button></a>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example2" class="table table-bordered table-hover">
+                  <thead>
+                  <tr>
+                    <th>Group Name</th>
+                    <th>Slug</th>
+                    <th>Active</th>
+                    <th>Created date</th>
+                    <th>Modified Date</th>
+                    <th>Created By</th>
+                    <th>Modified By</th>
+                    <th>Action</th>
+                    <tr>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {% for i in usergroup%}
+                    <tr>
+                      <td>{{i.name}}</td>
+                      <td>{{i.slug}}</td>
+                      <td>{{i.is_active}}</td>
+                      <td>{{i.created_date}}</td>
+                      <td>{{i.modified_date}}</td>
+                      <td>{{i.created_by}}</td>
+                      <td>{{i.modified_by}}</td>
+                      <td>
+                        <a href="{% url 'usergroupupdate' i.group_id %}">Update</a>
+                        <a href="{% url 'usergroupdelete' i.group_id %}">Delete</a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+  <!-- /.content -->
+  {% endblock %}
+</body>
+</html>

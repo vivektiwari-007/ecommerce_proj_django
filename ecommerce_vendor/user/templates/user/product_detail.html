@@ -1,0 +1,360 @@
+{% extends 'user/base.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	{% load static %}
+	{% block content %}
+		    <!--================= breadcrumb section start =================-->
+    <section class="breadcrumb">
+      <div class="container">
+          <h2 class="section-title text-center">Product Detail</h2>
+          <ul class="breadcrumb-nav">
+            <li><a href="{% url 'userindex' %}"><i class="fas fa-home"></i></a></li>
+            <li><span>Product Detail</span></li>
+          </ul>
+      </div>
+    </section>
+    <!--================= breadcrumb section end =================-->
+
+   	 <!--================= product main section end =================-->
+    <section class="product-main pt-100 pb-85">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 mb-md-0 mb-sm-3">
+            <div class="left-column">
+              <div class="slider-wrapper">
+                <div class="main-product-image">
+                {% for products in product %}
+                  <div class="item thumbnails" data-src="{{products.image.url}}">
+                    <img src="{{products.image.url}}" alt="product-image">
+                  </div>
+                {% endfor %}
+                </div>
+                <div class="product-thumbnails">
+                  {% for products in product %}
+                  <div class="item">
+                    <img src="{{products.image.url}}" alt="product-image" />
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>           
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="right-column product-single">
+
+                          <div class="content text-left">
+                              <h6 class="name"><a href="#">Sed eget tortor sit amet dolor sodales porta</a></h6>
+                              <div class="rating mt-2 mb-2">
+                                  <span class="fas fa-star checked"></span>
+                                  <span class="fas fa-star checked"></span>
+                                  <span class="fas fa-star checked"></span>
+                                  <span class="fas fa-star"></span>
+                                  <span class="far fa-star"></span>
+                              </div>
+                              <div class="price mb-2">
+                                <span class="regular-price">$225</span>
+                                <span class="discount-price">$220</span>
+                              </div>
+                              <div class="description">
+                                <p>Nunc facilisis sagittis ullamcorper. Proin lectus ipsum, gravida et mattis vulputate, 
+                                tristique ut lectus. Sed et lorem nunc. Vestibulum ante ipsum primis in faucibus 
+                                orci luctus et ultrices posuere cubilia Curae; Aenean eleifend laoreet congue. 
+                                Vivamus adipiscing nisl ut dolor dignissim semper. Nulla luctus malesuada tinci
+                                dunt. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per ince
+                                ptos himenaeos. Integer enim purus, posuere at ultricies eu, placerat a felis. Sus
+                                pendisse aliquet urna pretium eros convallis interdum. Quisque in arcu id dui vulp
+                                utate mollis eget non arcu. Aenean et nulla purus. Mauris vel tellus non nunc 
+                                mattis lobortis. </p>
+
+                                <p>Nunc facilisis sagittis ullamcorper. Proin lectus ipsum, gravida et mattis vulputate, 
+                                tristique ut lectus. Sed et lorem nunc. Vestibulum ante ipsum primis in faucibus 
+                                orci luctus et ultrices posuere cubilia Curae; Aenean eleifend laoreet congue. 
+                                Vivamus adipiscing nisl ut dolor dignissim semper. Nulla luctus malesuada tinci
+                                dunt. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per ince
+                                ptos himenaeos. I</p>
+                              </div>
+                               
+                              <p><i class="fas fa-check-circle stock-availabel"></i><span class="stock">10 In Stock</span></p>
+                              <div class="quantity prod-items">
+                                <input type="number" class="form-control" value="1">
+                               <div class="add-to-cart">
+                                 <a class="tx-ctm-btn" href="#">Add To Cart</a>
+                               </div> 
+                             </div>   
+
+                            <!-- blog Categories start -->
+                            <div class="col-12">
+                              <div class="full-width-tag">
+                                <div class="row blog-tag">
+                                  <span class="title">Categories:</span>
+                                  <ul class="tags">
+                                    <li><a href="#">Sports</a></li>
+                                    <li><a href="#">fashion</a></li>
+                                    <li><a href="#">men</a></li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- blog Categories end -->
+
+                            <!-- blog social media start -->
+                            <div class="col-12">
+                              <div class="full-width-tag">
+                                <div class="row blog-social mt-3">
+                                  <span class="title">Share:</span>
+                                  <ul class="social-media">
+                                    <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li><a href="#" class="twitter"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a href="#" class="google"><i class="fab fa-google-plus-g"></i></a></li>
+                                    <li><a href="#" class="pinterest"><i class="fab fa-pinterest"></i></a></li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- blog social media end -->
+                                                                                             
+                          </div>
+
+            </div>
+          </div>
+          <div class="col-12 pt-85">
+                      <div class="section-header text-center">
+                        <h1 class="section-title-outer">Detail</h1>
+                        <h2 class="section-title">Product Description</h2>
+                      </div>
+                      <div class="tabbable-line">                       
+                        <ul class="nav nav-tabs ">
+                          <li class="active">
+                            <a href="#description" data-toggle="tab" class="active">Product Detail</a>
+                          </li>
+                          <li>
+                            <a href="#review" data-toggle="tab">Review</a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="tab-content">
+                        <div class="tab-pane active" id="description">
+                          <div class="description">
+                            <p>Sed mollis efficitur massa in elementum. Fusce aliquam dictum diam, ornare vulputate massa condimentum at. Donec gravida risus quis tortor molestie, non cursus augue 
+                            vehicula. Sed ut nisi et nunc blandit sagittis vitae ut sem. Quisque ut placerat diam. Pellentesque quis rutrum lacus. Maecenas sagittis eu tellus a egestas. Quisque eget erat
+                            metus. Donec volutpat justo a nulla vestibulum finibus. Aliquam ipsum nisl, volutpat a nulla sit amet, mollis maximus mi. Vestibulum et aliquet risus, et pellentesque orci. 
+                            Vestibulum ut dolor ullamcorper, pellentesque felis quis, varius tellus.</p>
+
+                            <p>Mauris finibus ex urna, eu eleifend risus blandit ac. Mauris id semper magna. Duis in arcu eros. Vivamus blandit diam eget velit convallis, vel pretium eros dapibus. Sed 
+                            maximus at lorem at finibus. Vestibulum scelerisque scelerisque nisl. Donec fermentum, nisl non fringilla volutpat, tellus leo consectetur libero, eu consectetur velit nunc et 
+                            orci. Ut sed convallis elit, ut egestas justo.</p>
+                          </div>
+                        </div>
+                        <div class="tab-pane" id="review">
+                          <form class="rating-form">
+                            <div class="row">
+                              <div class="col-12 form-group">
+                                <div class="rating">
+                                  <label>
+                                    <input type="radio" name="stars" value="1" />
+                                    <span class="icon">★</span>
+                                  </label>
+                                  <label>
+                                    <input type="radio" name="stars" value="2" />
+                                    <span class="icon">★</span>
+                                    <span class="icon">★</span>
+                                  </label>
+                                  <label>
+                                    <input type="radio" name="stars" value="3" />
+                                    <span class="icon">★</span>
+                                    <span class="icon">★</span>
+                                    <span class="icon">★</span>   
+                                  </label>
+                                  <label>
+                                    <input type="radio" name="stars" value="4" />
+                                    <span class="icon">★</span>
+                                    <span class="icon">★</span>
+                                    <span class="icon">★</span>
+                                    <span class="icon">★</span>
+                                  </label>
+                                  <label>
+                                    <input type="radio" name="stars" value="5" />
+                                    <span class="icon">★</span>
+                                    <span class="icon">★</span>
+                                    <span class="icon">★</span>
+                                    <span class="icon">★</span>
+                                    <span class="icon">★</span>
+                                  </label>                         
+                                </div>
+                              </div>
+                              <div class="col-12 form-group"> 
+                                    <input type="text" name="text" id="text" autocomplete="off" class="form-control" placeholder="Your name" required>
+                              </div>                             
+                              <div class="col-12 form-group"> 
+                                 <textarea name='review' id='review' maxlength='100' class="form-control" placeholder='Write your review hear (Required)' required></textarea>
+                              </div>                                                          
+                              <div class="col-sm-3 col-12 form-group">
+                                  <button id="submit" type="submit" name="submit" class="tx-ctm-btn ">Save</button>
+                              </div> 
+                            </div>                            
+                          </form> 
+                        </div>
+                      </div>            
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="releatedproduct-section pb-100">
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col-12">
+              <div class="section-header text-center">
+                <h1 class="section-title-outer">Related</h1>
+                <h2 class="section-title">Related Products</h2>
+              </div> 
+                <div class="relatedproduct-slider row justify-content-between"> 
+                    <div class="col-lg-4 col-sm-6">
+                          <div class="product-single text-center">
+                              <div class="thumb">
+                                  <img src="{% static 'user/assets/images/products/product-1.jpg' %}" alt="product-image">
+                                  <span class="new">new</span>
+                                  <span class="discount-percentage">15%</span>
+                                  <ul class="product-icons">
+                                      <li class="quick-view"><a href="#"><i class="far fa-eye"></i></a></li>
+                                      <li class="cart"><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                                  </ul>
+                              </div>
+                              <div class="content text-left">
+                                  <div class="rating">
+                                    <span class="fas fa-star checked"></span>
+                                    <span class="fas fa-star checked"></span>
+                                    <span class="fas fa-star checked"></span>
+                                    <span class="fas fa-star"></span>
+                                    <span class="far fa-star"></span>
+                                  </div>                            
+                                  <h6 class="name"><a href="#">Sed eget tortor sit amet dolor sodales porta</a></h6>
+                                  <div class="price">
+                                    <span class="regular-price">$225</span>
+                                    <span class="discount-price">$220</span>
+                                  </div>
+                              </div>
+                          </div>
+                    </div>    
+                    <div class="col-lg-4 col-sm-6">
+                          <div class="product-single text-center">
+                              <div class="thumb">
+                                  <img src="{% static 'user/assets/images/products/product-2.jpg' %}" alt="product-image">
+                                  <span class="new">new</span>
+                                  <span class="discount-percentage">15%</span>
+                                  <ul class="product-icons">
+                                      <li class="quick-view"><a href="#"><i class="far fa-eye"></i></a></li>
+                                      <li class="cart"><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                                  </ul>
+                              </div>
+                              <div class="content text-left">
+                                  <div class="rating">
+                                    <span class="fas fa-star checked"></span>
+                                    <span class="fas fa-star checked"></span>
+                                    <span class="fas fa-star checked"></span>
+                                    <span class="fas fa-star"></span>
+                                    <span class="far fa-star"></span>
+                                  </div>                            
+                                  <h6 class="name"><a href="#">Sed eget tortor sit amet dolor sodales porta</a></h6>
+                                  <div class="price">
+                                    <span class="regular-price">$225</span>
+                                    <span class="discount-price">$220</span>
+                                  </div>
+                              </div>
+                          </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                          <div class="product-single text-center">
+                              <div class="thumb">
+                                  <img src="{% static 'user/assets/images/products/product-3.jpg' %}" alt="product-image">
+                                  <span class="new">new</span>
+                                  <span class="discount-percentage">15%</span>
+                                  <ul class="product-icons">
+                                      <li class="quick-view"><a href="#"><i class="far fa-eye"></i></a></li>
+                                      <li class="cart"><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                                  </ul>
+                              </div>
+                              <div class="content text-left">
+                                  <div class="rating">
+                                    <span class="fas fa-star checked"></span>
+                                    <span class="fas fa-star checked"></span>
+                                    <span class="fas fa-star checked"></span>
+                                    <span class="fas fa-star"></span>
+                                    <span class="far fa-star"></span>
+                                  </div>                            
+                                  <h6 class="name"><a href="#">Sed eget tortor sit amet dolor sodales porta</a></h6>
+                                  <div class="price">
+                                    <span class="regular-price">$225</span>
+                                    <span class="discount-price">$220</span>
+                                  </div>
+                              </div>
+                          </div>
+                    </div>        
+                    <div class="col-lg-4 col-sm-6">
+                          <div class="product-single text-center">
+                              <div class="thumb">
+                                  <img src="{% static 'user/assets/images/products/product-4.jpg' %}" alt="product-image">
+                                  <span class="new">new</span>
+                                  <span class="discount-percentage">15%</span>
+                                  <ul class="product-icons">
+                                      <li class="quick-view"><a href="#"><i class="far fa-eye"></i></a></li>
+                                      <li class="cart"><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                                  </ul>
+                              </div>
+                              <div class="content text-left">
+                                  <div class="rating">
+                                    <span class="fas fa-star checked"></span>
+                                    <span class="fas fa-star checked"></span>
+                                    <span class="fas fa-star checked"></span>
+                                    <span class="fas fa-star"></span>
+                                    <span class="far fa-star"></span>
+                                  </div>                            
+                                  <h6 class="name"><a href="#">Sed eget tortor sit amet dolor sodales porta</a></h6>
+                                  <div class="price">
+                                    <span class="regular-price">$225</span>
+                                    <span class="discount-price">$220</span>
+                                  </div>
+                              </div>
+                          </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                          <div class="product-single text-center">
+                              <div class="thumb">
+                                  <img src="{% static 'user/assets/images/products/product-5.jpg' %}" alt="product-image">
+                                  <span class="new">new</span>
+                                  <span class="discount-percentage">15%</span>
+                                  <ul class="product-icons">
+                                      <li class="quick-view"><a href="#"><i class="far fa-eye"></i></a></li>
+                                      <li class="cart"><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                                  </ul>
+                              </div>
+                              <div class="content text-left">
+                                  <div class="rating">
+                                    <span class="fas fa-star checked"></span>
+                                    <span class="fas fa-star checked"></span>
+                                    <span class="fas fa-star checked"></span>
+                                    <span class="fas fa-star"></span>
+                                    <span class="far fa-star"></span>
+                                  </div>                            
+                                  <h6 class="name"><a href="#">Sed eget tortor sit amet dolor sodales porta</a></h6>
+                                  <div class="price">
+                                    <span class="regular-price">$225</span>
+                                    <span class="discount-price">$220</span>
+                                  </div>
+                              </div>
+                          </div>
+                    </div>                                                   
+                </div>
+                <div class="relatedprod-arrow custom-slick-nav"></div>  
+          </div>       
+        </div>
+      </div>
+    </section>
+	{% endblock %}
+</body>
+</html>

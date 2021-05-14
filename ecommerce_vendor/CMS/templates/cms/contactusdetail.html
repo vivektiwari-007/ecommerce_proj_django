@@ -1,0 +1,98 @@
+{% extends 'myapp/base.html' %} <!-- Add this for inheritance -->
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome Home</title>
+</head>
+<body>
+  {% block content %}
+
+  <div class="content-header">
+    <div class="container-fluid">
+    </div>
+  </div>
+
+
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <!-- <h1>Profile</h1> -->
+        </div>
+        <div class="col-sm-6">
+             <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="">CMS</a></li>
+            <li class="breadcrumb-item active"> Contactus</li>
+          </ol>
+        </div><!-- /.col -->
+          <div class="col-sm-6">
+              <div class="breadcrumb float-sm-right">
+                
+              </div>
+          </div>
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+
+  
+  
+  <!-- Content Header (Page header) -->
+  <section class="content">
+
+    <!-- Default box -->
+    <div class="card card-solid">
+      <div class="card-body pb-0">
+        <div class="row d-flex align-items-stretch">
+          <div class="col-12">
+            <div class="card bg-light">
+              <div class="card-header text-muted border-bottom-0">
+                Digital Strategist
+              </div>
+              {% for i in contactus %}
+              <div class="card-body pt-0">
+                <div class="row">
+                  <div class="col-7">
+                    <h2 class="lead"><b>{{i.name}}</b></h2>
+                    <h6>{{i.email}}</h6>
+                    <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee Lover </p>
+                    <ul class="ml-4 mb-0 fa-ul text-muted">
+                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: Demo Street 123, Demo City 04312, NJ</li>
+                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: + {{i.mobile}}</li>
+                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa-calendar-week"></i></span> Working day #: {{i.start_day}} To {{i.end_day}}</li>
+                      <li class="small"><span class="fa-li"><i class="fas fa-lg fa-clock"></i></span> Working time #: {{i.start_time}} To {{i.end_time}}</li>
+                    </ul>
+                  </div>
+                  <div class="col-5 text-center">
+                    <img src="{{i.image.url}}" height="200" width="100" alt="" class="img-circle img-fluid">
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card-footer">
+                <div class="text-right">
+                  <a href="#" class="btn btn-sm bg-teal">
+                    <i class="fas fa-comments"></i>
+                  </a>
+                  <a href="{% url 'contactusupdate' i.contactus_id %}" class="btn btn-sm btn-primary">
+                    <i class="fas fa-user"></i> Update Profile
+                  </a>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          </div>
+          
+      <!-- /.card-body -->
+      <!-- /.card-footer -->
+    </div>
+    <!-- /.card -->
+
+  </section>
+  {% endblock %}
+</body>
+</html>
+
+

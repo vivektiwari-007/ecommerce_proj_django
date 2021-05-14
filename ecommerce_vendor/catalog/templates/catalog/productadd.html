@@ -1,0 +1,479 @@
+{% extends 'myapp/base.html' %} <!-- Add this for inheritance -->
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome Home</title>
+</head>
+<body>
+  {% block content %}
+
+  <div class="content-header">
+    <div class="container-fluid">
+    </div>
+  </div>
+
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <!-- <h1>Profile</h1> -->
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="">Catalog</a></li>
+            <li class="breadcrumb-item active"><a href="{% url 'productdetail' %}">Product</a></li>
+            <li class="breadcrumb-item active">Add Product</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+    <!-- {{request.user.username}} -->
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"></h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <form role="form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="form-group col-sm-4">
+                            <label for="exampleInputEmail1">Product name</label><span class="red">*</span>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter category name" value="{{product.name}}">
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="exampleInputEmail1">SKU</label>
+                            <input type="text" class="form-control" id="sku" name="sku" placeholder="Enter sku" value="{{product.sku}}">
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="exampleInputEmail1">Product slug</label>
+                            <input type="text" class="form-control" id="product_slug" name="product_slug" placeholder="Enter product slug" value="{{product.product_slug}}">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="form-group col-sm-8">
+                        <label for="exampleInputEmail1">Product Content</label>
+                        <textarea class="textarea" placeholder="Place some text here" name="page_content"
+                        style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{product.page_content}}</textarea>
+                       </div>     
+                      </div>
+                      <div class="form-group">
+                        <div class="form-group col-sm-8">
+                        <label for="email">Image</label>
+                          <input type="file" class="form-control" id="image" name="image" value="{{blog.image.url}}">
+                          {% if product %}
+                          <img class="profile-user-img img-fluid img-circle"
+                            src="{{product.image.url}}"
+                            alt="User profile picture">
+                          {% endif %}
+                          </div>
+                      </div>
+                      <div class="form-group row" hidden>
+                        <label for="email" class="col-sm-3 col-form-label">Created By</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="email" name="created_by" placeholder="Email" value="{% if product.created_by %} {{product.created_by}} {% else %} {{request.user.user_id}} {% endif %}">
+                        </div>
+                      </div>
+                      <div class="form-group row" hidden>
+                        <label for="email" class="col-sm-3 col-form-label">Modified By</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="email" name="modified_by" placeholder="Email" value="{{request.user.user_id}}">
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.card-body -->
+                    <!-- .card-body -->
+                    <div class="card card-primary card-outline">
+                      <div class="card-header">
+                        <h3 class="card-title">
+                          <i class="fas fa-edit"></i>
+                          More Information
+                        </h3>
+                      </div>
+                      <div class="card-body">
+                        <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+                          <li class="nav-item">
+                            <a class="nav-link active" id="custom-content-below-home-tab" data-toggle="pill" href="#custom-content-below-category" role="tab" aria-controls="custom-content-below-home" aria-selected="true">Category</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="custom-content-below-profile-tab" data-toggle="pill" href="#custom-content-below-data" role="tab" aria-controls="custom-content-below-data" aria-selected="false">Data</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="custom-content-below-messages-tab" data-toggle="pill" href="#custom-content-below-image" role="tab" aria-controls="custom-content-below-messages" aria-selected="false">Image</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="custom-content-below-settings-tab" data-toggle="pill" href="#custom-content-below-relatedproduct" role="tab" aria-controls="custom-content-below-settings" aria-selected="false">Related Product</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" id="custom-content-below-settings-tab" data-toggle="pill" href="#custom-content-below-varient" role="tab" aria-controls="custom-content-below-settings" aria-selected="false">Varient</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" id="custom-content-below-settings-tab" data-toggle="pill" href="#custom-content-below-price" role="tab" aria-controls="custom-content-below-settings" aria-selected="false">Price</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" id="custom-content-below-settings-tab" data-toggle="pill" href="#custom-content-below-seo" role="tab" aria-controls="custom-content-below-settings" aria-selected="false">SEO</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" id="custom-content-below-settings-tab" data-toggle="pill" href="#custom-content-below-shipping" role="tab" aria-controls="custom-content-below-settings" aria-selected="false">Shipping</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" id="custom-content-below-settings-tab" data-toggle="pill" href="#custom-content-below-managetierprice" role="tab" aria-controls="custom-content-below-settings" aria-selected="false">Manage Tier Price</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" id="custom-content-below-settings-tab" data-toggle="pill" href="#custom-content-below-settings" role="tab" aria-controls="custom-content-below-settings" aria-selected="false">Settings</a>
+                          </li>
+                        </ul>
+                        <div class="tab-content" id="custom-content-below-tabContent">
+                          <div class="tab-pane fade show active" id="custom-content-below-category" role="tabpanel" aria-labelledby="custom-content-below-home-tab"><br>
+                              <div class="row">
+                                  <div class="form-group col-sm-6">
+                                   <!-- <div class="form-group"> -->
+                                  <label>Categoryies</label>
+                                  <select class="select2" multiple="multiple" name="category_id[]" data-placeholder="" style="width: 100%;">
+                                    <option>Select category</option>
+                                    {% for i in category %}
+                                      <option {% if product %} {% if i.category_id in product_category %} selected {% endif %} {% endif %} value="{{i.category_id}}">{{i.name}}</option>
+                                    {% endfor %}
+                                  </select>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="tab-pane fade" id="custom-content-below-data" role="tabpanel" aria-labelledby="custom-content-below-profile-tab"><br>
+                            <div class="row">
+                                <div class="form-group col-sm-4">
+                                    <label for="exampleInputEmail1">UPC</label>
+                                    <input type="text" class="form-control" id="upc" name="upc" placeholder="Enter upc" value="{{product.upc}}">
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label for="exampleInputEmail1">Quentity</label>
+                                    <input type="text" class="form-control" id="quentity" name="quentity" placeholder="Enter quentity" value="{{product.quentity}}">
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label for="exampleInputEmail1">Out of stock status</label>
+                                    <select class="form-control" name="out_of_stock" data-placeholder="Select category" style="width: 100%;">
+                                      <option> ----- stock status ----- </option>
+                                      <option {% if product.out_of_stock == "instock" %} selected {% endif %} value="instock">In Stock</option>
+                                        <option {% if product.out_of_stock == "outstock" %} selected {% endif %} value="outstock">Out stock</option>
+                                      </select>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="form-group col-sm-4">
+                                      <label for="exampleInputEmail1">Date Available</label>
+                                      <input type="date" class="form-control" id="date_available" name="date_available" placeholder="Enter available date" value="{{product.date_available}}">
+                                  </div>
+                                  <div class="form-group col-sm-4">
+                                      <label for="exampleInputEmail1">Status</label>
+                                      <select class="form-control" name="is_active" data-placeholder="Select a State" style="width: 100%;">
+                                          <option>---Select Active---</option>
+                                          <option {% if product.is_active == True %} selected {% endif %} value="True">Yes</option>
+                                          <option {% if product.is_active == False %} selected {% endif %} value="False">No</option>
+                                      </select>
+                                  </div>
+                                  <div class="form-group col-sm-4">
+                                      <label for="exampleInputEmail1">Sort order</label>
+                                      <input type="text" class="form-control" id="sort_order" name="sort_order" placeholder="Enter sort order" value="{{product.sort_order}}">
+                                  </div>
+                              </div>
+                              {{product.postal_code_verification}}
+                              <div class="row">
+                                  <div class="form-group col-sm-4">
+                                    <div class="form-group">
+                                      <input type="checkbox" id="postal_code_verification" name="postal_code_verification" class="" value="1" style="margin-top:40px;" onchange="hideShowCartItem(this)" {% if product.postal_code_verification == True %} checked {% endif %}>
+                                      Enable postal code verification for shipping address
+                                  </div>
+                                  </div>
+                                  <div class="form-group col-sm-4">
+                                      <label>Manuacturer</label>
+                                      <select class="select2" name="brand_id[]" data-placeholder="Select brand" style="width: 100%;" multiple="multiple">
+                                        {% for i in brand %}
+                                            <option {% if product %} {% if i.brand_id in product_brand %} selected {% endif %} {% endif %} value="{{i.brand_id}}">{{i.name}}</option>
+                                        {% endfor %}
+                                      </select>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="custom-content-below-image" role="tabpanel" aria-labelledby="custom-content-below-messages-tab"><br>
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <label>Product Multi Image</label>
+                                        <input type="file" class="form-control" id="multiimage" name="multiimage" multiple=True>
+                                        {% if product %}
+                                          {% for pi in product.productmultiimage_set.all %}
+                                            <img class="profile-user-img img-fluid img-circle"
+                                              src="{{pi.multiimage.url}}"
+                                              alt="User profile picture">
+                                          {% endfor %}
+                                        {% endif %} 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="custom-content-below-relatedproduct" role="tabpanel" aria-labelledby="custom-content-below-settings-tab"><br>
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <label>Related product</label>
+                                        <select class="form-control" name="related_product" data-placeholder="Select Parent Id" style="width: 100%;">
+                                        {% for prod in prod %}
+                                            <option {% if product.related_product == prod.name %} selected {% endif %} value="{{prod.name}}">{{prod.name}}</option>
+                                        {% endfor %}
+                                        </select> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="custom-content-below-varient" role="tabpanel" aria-labelledby="custom-content-below-settings-tab"><br>
+
+                              <div class="row">
+                                <div class="col-5 col-sm-2">
+                                  <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
+                                  {% for i in varient %}
+                                    <a class="nav-l
+                                    ink" id="{{i.name}}{{i.varient_id}}-tab" data-toggle="pill" href="#{{i.name}}{{i.varient_id}}" role="tab" aria-controls="Color1" aria-selected="false" onclick="getVariantInfo({{i.varient_id}},'{{i.name}}')">{{i.name}}(<em>{{i.select_type}}</em>)</a>
+                                  {% endfor %}
+                                  </div>
+                                </div>
+                                <div class="col-7 col-sm-10">
+                                  <div class="tab-content" id="vert-tabs-tabContent" style="display: none;">
+                                    <div class="tab-pane text-left fade show active" id="changeTheId" role="tabpanel">
+                                    <!-- <div class="tab-pane text-left fade show active" id="changeTheId" role="tabpanel" style="display: none;"> -->
+                                        <div class="row">
+                                           <table class="table table-bordered table-striped">
+                                              <thead>
+                                                 <tr>
+                                                    <th>Variant Name</th>
+                                                    <th>Variant Value 1</th>
+                                                    <th>Varaint Value 2</th>
+                                                    <th>Varaint Value 3</th>
+                                                    <th>Varaint Value 4</th>
+                                                    <th>Varaint Value 5</th>
+                                                    <th>Remove</th>
+                                                 </tr>
+                                              </thead>
+                                              <tbody id="vert-tabs-tabContent-values">
+                                              </tbody>
+                                           </table>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row" id="variantInfoAddVal" style="display: none;">
+                              <!-- <div class="row" id="variantInfoAddVal"> -->
+                                <input type="hidden" value="1" id="countTheVariantsInputs">
+                                <table class="table table-bordered table-striped">
+                                   <thead>
+                                      <tr>
+                                         <th>Images</th>
+                                         <th>Options</th>
+                                         <th>SKU</th>
+                                         <th>Price</th>
+                                         <th>Barcode</th>
+                                         <th>Inventory</th>
+                                         <th>Status</th>
+                                         <th>remove</th>
+                                      </tr>
+                                   </thead>
+                                   <tbody id="variantInfoAdd">
+                                   </tbody>
+                                </table>
+                              </div>
+                            </div>
+                            <div class="tab-pane fade" id="custom-content-below-price" role="tabpanel" aria-labelledby="custom-content-below-settings-tab"><br>
+                              <div class="row">
+                                <div class="form-group col-sm-4">
+                                    <label for="exampleInputEmail1">Tax</label><br>
+                                    <input type="radio" class="" id="radioPrimary1" name="taxvalue" value="value" onclick="gettotalcost();" checked><label for="radioPrimary1">Value</label>&nbsp;
+                                    <input type="radio" class="" id="radioPrimary2" name="taxvalue" value="percentage" onclick="gettotalcost();" {% if product.tax_type == "percentage" %} checked {% endif %}><label for="radioPrimary2">Percentage</label>
+                                </div>
+                              </div>
+                              <div class="row">
+                                  <div class="form-group col-sm-4">
+                                      <label for="exampleInputEmail1">Product cost</label>
+                                      <input type="text" class="form-control" id="product_cost" name="product_cost" placeholder="Enter product cost" value="{% if product %} {{product.product_cost}} {% else %} 0 {% endif %}" oninput="gettotalcost()">
+                                  </div>
+                                  <div class="form-group col-sm-4">
+                                      <label for="exampleInputEmail1">Extra product cost</label>
+                                      <input type="text" class="form-control" id="add_product_cost" name="add_product_cost" placeholder="Enter extra product cost" value="{% if product %} {{product.add_product_cost}} {% else %} 0 {% endif %}" oninput="gettotalcost()">
+                                  </div>
+                                  <div class="form-group col-sm-4">
+                                      <label for="exampleInputEmail1">Total cost</label>
+                                      <input type="text" class="form-control" id="total_cost" name="total_cost"  placeholder="Enter total cost" value="{{product.total_cost}}">
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="tab-pane fade" id="custom-content-below-seo" role="tabpanel" aria-labelledby="custom-content-below-settings-tab"><br>
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <label>Meta tag title</label>
+                                        <input type="text" class="form-control" id="meta_tag_title" name="meta_tag_title" placeholder="Enter meta tag title" value="{{product.meta_tag_title}}">
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label>Meta tag keyword</label>
+                                        <input type="text" class="form-control" id="meta_tag_keyword" name="meta_tag_keyword" placeholder="Enter meta tag keyword" value="{{product.meta_tag_keyword}}">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-8">
+                                        <label>Meta tag discriptor</label>
+                                        <textarea class="textarea" placeholder="Place some text here" name="meta_tag_discripation"
+                                             style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{product.meta_tag_discripation}}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="custom-content-below-shipping" role="tabpanel" aria-labelledby="custom-content-below-settings-tab"><br>
+                              <div class="row">
+                                <div class="form-group col-sm-3">
+                                    <label for="exampleInputEmail1">Required Shipping:</label>
+                                    <input type="radio" class="" id="required_shipping" name="required_shipping" value="free" checked><label for="free">Free</label>&nbsp;
+                                    <input type="radio" class="" id="required_shipping" name="required_shipping" value="paid" {% if product.required_shipping == "paid"%} checked {% endif %}><label for="paid">Paid</label>
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label for="exampleInputEmail1">width</label>
+                                    <input type="number" class="form-control" id="width" name="width" placeholder="Enter width" value="{{product.width}}">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label for="exampleInputEmail1">height:</label>
+                                    <input type="number" class="form-control" id="height" name="height" placeholder="Enter height" value="{{product.height}}">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label for="exampleInputEmail1">length:</label>
+                                    <input type="number" class="form-control" id="length" name="length" placeholder="Enter length" value="{{product.length}}">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                  <label for="exampleInputEmail1">weight:</label>
+                                  <input type="number" class="form-control" id="weight" name="weight" placeholder="Enter weight" value="{{product.weight}}">
+                              </div>
+                              </div>
+                            </div>
+                          </div>
+                         </div>
+                        <!-- /.card -->
+                      </div>
+                    <div class="card-footer">
+                      <button type="submit" class="btn btn-primary">{% if product %}Update{% else %}Submit{% endif %}</button>
+                    </div>
+                  </form>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- {% for pv in product.productvarientinfo_set.all %}
+    {{pv.varientinfo_name}}
+    {% endfor %}
+    <h2>hello</h2> -->
+  <!-- /.content -->
+  {% endblock %}
+
+  {% block js %}
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+  <script>
+    $(function () {
+    //   Summernote
+      $('.textarea').summernote();
+      $('.select2').select2();
+    });
+
+    // define tax value to value or percentage
+    function gettotalcost(){
+      var itemtype = "";
+      var taxvalue = "";
+      var productcost = "";
+      var demovalue = 0;
+      if(document.getElementById('radioPrimary1').checked){
+        itemtype = document.getElementById('radioPrimary1').value;
+        console.log(itemtype);
+      }
+      else{
+        itemtype = document.getElementById('radioPrimary2').value;
+        console.log(itemtype);
+      }
+      taxvalue = document.getElementById('add_product_cost').value;
+      productcost = document.getElementById('product_cost').value;
+      if (itemtype == "percentage"){
+        if (taxvalue <= 100)
+        {
+          demovalue = (productcost*taxvalue)/100
+          document.getElementById("total_cost").value = Number(productcost)+Number(demovalue)
+        }
+        else{
+          alert("percentage find value less then 100")
+        }
+      }
+      else{
+        document.getElementById("total_cost").value = Number(productcost)+Number(taxvalue)
+      }
+    };
+
+
+    // work on verient info
+    function getVariantInfo(ID,name){
+      var Idname = name+''+ID;
+      var countof = $("#countTheVariantsInputs").val();
+      var varient = ID;
+      $.ajax(
+      {
+          type:"GET",
+          url: "/admin/catalog/varientinfo",
+          data : {
+            'varient': varient
+          },
+          success:function(data){
+            var list = "<tr><td>"+ name +"</td>";
+            data = data.split("['").toString().split("']").toString().split("'").toString().split(",");
+            console.log(data);
+            for(var x = 0; x < data.length; x++){
+              if(data[x] != '' && data[x] != ' '){
+                list += "<td>" + data[x] + "</td>";
+              }
+            }
+            list += "<td><a href='#' data-name='"+name+"' class='remove_field'>Remove</a></td></tr>";
+            $('#vert-tabs-tabContent').show();
+            $("#countTheVariantsInputs").val(data)
+            $("#vert-tabs-tabContent-values").append(list);
+            $("#variantInfoAddVal").removeAttr('style');
+            
+              for(var x = 0; x < data.length; x++){
+                if(data[x] != '' && data[x] != ' '){
+                  $("#variantInfoAdd").append('<tr class="optionOf-'+name+'"><td><input type="file" name="varient_image"/></td><td><input type="text" name="varient_name" value='+ data[x] +' readonly/></td><td><input type="text" name="varient_sku" {% for pv in product.productvarientinfo_set.all %} {% if pv.varientinfo_name %} value="{{pv.varientinfo_sku}}" {% endif %} value="hello"{% endfor %}/></td><td><input type="number" name="varient_price"></td><td><input type="text" name="varient_barcode"></td><td><input type="number" name="varient_inventory"></td><td><input type="checkbox" name="varient_status"></td><td><a href="#" class="remove_field">Remove</a></td></tr>');
+                }
+              };
+            $('#vert-tabs-tabContent-values').on("click",".remove_field", function(e){
+              e.preventDefault();
+              var optionSelectedForRemove = $(this).data('name');
+              $(this).closest('tr').remove(); 
+              if($('.optionOf-'+optionSelectedForRemove)){
+                for(var z = 0; z < $('.optionOf-'+optionSelectedForRemove).length; z++){
+                  $('.optionOf-'+optionSelectedForRemove)[z].remove();
+                }
+              }
+            });
+            $('#variantInfoAdd').on("click",".remove_field", function(e){
+              console.log("hello")
+              e.preventDefault(); 
+              $(this).closest('tr').remove();
+            });
+          }
+       })
+      };
+
+   
+  </script>
+  
+  {% endblock %}
+</body>
+</html>

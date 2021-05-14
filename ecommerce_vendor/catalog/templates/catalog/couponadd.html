@@ -1,0 +1,226 @@
+{% extends 'myapp/base.html' %} <!-- Add this for inheritance -->
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome Home</title>
+</head>
+<body>
+  {% block content %}
+
+  <div class="content-header">
+    <div class="container-fluid">
+    </div>
+  </div>
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <!-- <h1>Profile</h1> -->
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="">Catalog</a></li>
+            <li class="breadcrumb-item active"><a href="{% url 'coupondetail' %}">coupon</a></li>
+            <li class="breadcrumb-item active">Add coupon</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+    <!-- {{request.user.username}} -->
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"></h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <form role="form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="form-group col-sm-4">
+                                <label>Coupon code</label>
+                                <input type="text" class="form-control" id="coupon_code" name="coupon_code" placeholder="Enter coupon code" value="{{coupon.coupon_code}}">
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>Coupon description</label>
+                                <input type="text" class="form-control" id="coupon_description" name="coupon_description" placeholder="Enter coupon discripation" value="{{coupon.coupon_description}}">
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>Coupon Type</label>
+                                <select class="form-control" name="coupon_type" data-placeholder="Select coupon type" style="width: 100%;">
+                                  <option> ----- coupon type ----- </option>
+                                  <option {% if coupon.coupon_type == "amountdiscount" %} selected {% endif %} value="amountdiscount">Amount Discount</option>
+                                  <option {% if coupon.coupon_type == "percentagediscount" %} selected {% endif %} value="percentagediscount">Percantage Discount</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-4">
+                                <label>Coupon value</label>
+                                <input type="number" class="form-control" id="coupon_value" name="coupon_value" placeholder="Enter coupon value" value="{{coupon.coupon_value}}">
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>Start date</label>
+                                <input type="date" class="form-control" id="start_date" name="start_date" placeholder="Enter start date" value="{{coupon.start_date}}">
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>End date</label>
+                                <input type="date" class="form-control" id="end_date" name="end_date" placeholder="Enter end date" value="{{coupon.end_date}}">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    <!-- .card-body -->
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                          <h3 class="card-title">
+                            <i class="fas fa-edit"></i>
+                            More Information
+                          </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="form-group col-sm-4">
+                                    <label>Minimum purchase amount</label>
+                                    <input type="number" class="form-control" id="minimum_purchase_amount" name="minimum_purchase_amount" placeholder="Enter minimum purchase amount" value="{{coupon.minimum_purchase_amount}}">
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label>Maximum purchase amount</label>
+                                    <input type="number" class="form-control" id="maximum_purchase_amount" name="maximum_purchase_amount" placeholder="Enter maximum purchase amount" value="{{coupon.maximum_purchase_amount}}">
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label>Email Restriction</label>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" value="{{coupon.email}}">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-4">
+                                    <label>Product applicable for this coupon</label>{% for j in coupon.product_id.all %} {{j.product_id}}, {% endfor %}
+                                    <select class="select2" name="product_id[]" data-placeholder="Select product" style="width: 100%;" multiple>
+                                        {% if coupon %}
+                                            <!-- <option>hello</option> -->
+                                            <option value="{{coupon.product_id.product_id}}">{% for j in coupon.product_id.all %}{{j.name}}{% endfor %}</option>
+                                            {% for i in product %}
+                                                <!-- {% if brand.brand_id != i.brand_id %} -->
+                                                    <option value="{{i.product_id}}">{{i.name}}</option>
+                                                <!-- {% endif %} -->
+                                            {% endfor %}
+                                        {% else %}
+                                            <option>Select category</option>
+                                                {% for i in product %}
+                                                    <option value="{{i.product_id}}">{{i.name}}</option>
+                                                {% endfor %}
+                                        {% endif %}
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label>Usage limit for this coupon</label>
+                                    <input type="number" class="form-control" id="coupon_limit_use" name="coupon_limit_use" placeholder="Enter coupon limit use" value="{{coupon.coupon_limit_use}}">
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label>No of times the user can use this discount</label>
+                                    <input type="number" class="form-control" id="no_of_times_use_discount" name="no_of_times_use_discount" placeholder="Enter no of times use discount" value="{{coupon.no_of_times_use_discount}}">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-4">
+                                    <label>Status</label>
+                                    <select class="form-control" name="is_active" data-placeholder="Select a State" style="width: 100%;">
+                                      <option>---Select Active---</option>
+                                      <option {% if coupon.is_active == True %} selected {% endif %} value="True">Yes</option>
+                                      <option {% if coupon.is_active == False %} selected {% endif %} value="False">No</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <div class="form-group">
+                                        <input type="checkbox" id="coupne_code_apply_all_item_in_the_cart" name="coupne_code_apply_all_item_in_the_cart" class="" value="1" style="margin-top:40px;" onchange="hideShowCartItem(this)">
+                                        Coupon Code Applies to all qualifying Items in the cart
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-4" id="no_of_item_cart_apply_coupon">
+                                    <label>Specify the number of cart Items the coupon code can be applied</label>
+                                    <input type="text" class="form-control" id="no_of_item_cart_apply_coupon" name="no_of_item_cart_apply_coupon" placeholder="Enter specify the number of cart items the coupon code can be applied" value="{% if coupon %} {{coupon.no_of_item_cart_apply_coupon}} {% else %} 0 {% endif %}">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-4 form-group" hidden>
+                                    <label for="email" class="col-sm-3 col-form-label">Created By</label>
+                                    <input type="text" class="form-control" id="email" name="created_by" placeholder="Email" value="{% if coupon %} {{coupon.created_by}} {% else %} {{request.user.user_id}} {% endif %}">
+                                  </div>
+                                  <div class="form-group col-sm-4 form-group" hidden>
+                                    <label for="email" class="col-sm-3 col-form-label">Modified By</label>
+                                    <input type="text" class="form-control" id="email" name="modified_by" placeholder="Email" value="{{request.user.user_id}}">
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                      <button type="submit" class="btn btn-primary">{% if coupon %}Update{% else %}Submit{% endif %}</button>
+                    </div>
+                  </form>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+  <!-- /.content -->
+  {% endblock %}
+
+  {% block js %}
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+  <script>
+    $(function () {
+        $('.select2').select2();
+        // Summernote
+        //   $('.textarea').summernote()
+        
+
+        // show and hisde cart
+        $("#coupne_code_apply_all_item_in_the_cart").click(function () {
+            if ($(this).is(":checked")) {
+                $("#no_of_item_cart_apply_coupon").hide();
+            } else {
+                $("#no_of_item_cart_apply_coupon").show();
+            }
+        });
+
+        //check start date greter then current date
+        $("#start_date").change(function(){
+          var startdate = document.getElementById('start_date').value;
+          var d = new Date();
+          if((Date.parse(startdate) <= Date.parse(d))){
+            alert("start date should be greter then current date")
+            document.getElementById('start_date').value = "";
+          }
+        });
+
+
+        //check end date greter then start date
+        $("#end_date").change(function(){
+          var startdate = document.getElementById('start_date').value;
+          var enddate = document.getElementById('end_date').value;
+          if((Date.parse(enddate) <= Date.parse(startdate))){
+            alert("enddate should be greter then start date")
+            document.getElementById('end_date').value = "";
+          }
+        });
+    });
+  </script>
+  
+  {% endblock %}
+</body>
+</html>

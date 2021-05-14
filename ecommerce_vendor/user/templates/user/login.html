@@ -1,0 +1,87 @@
+{% extends 'user/base.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	{% load static %}
+	{% block content %}
+		    <!--================= breadcrumb section start =================-->
+    <section class="breadcrumb">
+      <div class="container">
+          <h2 class="section-title text-center">Login</h2>
+          <ul class="breadcrumb-nav">
+            <li><a href="index.html"><i class="fas fa-home"></i></a></li>
+            <li><span>Login</span></li>
+          </ul>
+      </div>
+    </section>
+    <!--================= breadcrumb section end =================-->
+
+    <!--================= login section start =================-->
+
+
+    <section class="login section-padding">
+      <div class="container">
+            <div class="row justify-content-between"> 
+              <div class="col-12">
+                  <div class="row"> 
+                  <div class="col-12 d-flex">                  
+                    <div class="col-md-6 col-12 left-part login-bg">
+                        <h4 class="text-left mb-4">Information</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non aliquet tellus. 
+                        Pellentesque commodo posuere nibh, sed scelerisque erat ultricies vel. Nullam eget purus eget elit vestibulum faucibus vel sollicitudin metus. Nam iaculis orci in augue aliquet vulputate. Duis malesuada egestas massa sit amet faucibus. ellentesque vel consectetur ante. Nulla vitae mauris a quam tempus porttitor ac vel tellus. Mauris placerat est leo, et molestie metus lacinia sed. Duis et ante quis quam cursus lobortis nec imperdiet sapien. Nam a cursus nulla. Ut ullamcorper, arcu in tristique consectetur, augue massa mattis justo, eget euismod orci odio vel lacus.</p>
+                        <span class="shopnow mt-4"><a href="#">Have An Account</a> </span>
+                    </div>
+                    <div class="col-md-6 col-12 right-part login-bg">
+                        <h4 class="text-left mb-4">Sign In</h4>
+                              <div class="login-form">
+                               <form method="post">{% csrf_token %}
+                                  <div class="row">
+                                    <div class="col-12 form-group">
+                                      <label>Email</label>
+                                      <input type="text" name="username" id="email" class="form-control" required>
+                                    </div>         
+                                    <div class="col-12 form-group">
+                                      <label>Password</label>
+                                      <input  type="password" name="password" id="password" class="form-control" autocomplete="off" required>
+                                    </div>
+                                    <div class="col-12 form-group">
+                                      <div class="row">
+                                        <div class="col-6">
+                                          <!-- <div class="customcheckbox">
+                                            <input type="checkbox" id="loginremember">
+                                            <label for="loginremember">Remeber Me</label>
+                                          </div> -->
+                                        </div>
+                                        <div class="col-6">
+                                          <a href="{% url 'user_password_reset_user' %}" class="float-right">Forget Password?</a> 
+                                        </div>     
+                                      </div>                              
+                                    </div>                                     
+                                  </div>
+                                  <div class="mb-3" hidden>
+								    <label for="exampleInputPassword1" class="form-label">role type</label>
+								    <input type="text" class="form-control" id="role_id" name="role_id" value="{{role.role_id}}">
+								  </div>
+								  {% if messages %}
+									        {% for message in messages %}
+								               {{message}}
+								            {% endfor %}
+								        {% endif %} 
+                                  <div class="form-group mt-2 mb-0">
+                                  	<button type="submit" class="btn btn-primary">Sign In</button>	
+                                   <!-- <span class="shopnow"><a href="">sign up</a></span>   -->
+                                  </div>
+                               </form> 
+                            </div>                                                         
+                    </div>     
+                  </div>               
+              </div>                              
+            </div>
+      </div>      
+    </section>
+	{% endblock %}
+</body>
+</html>

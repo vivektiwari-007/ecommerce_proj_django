@@ -1,0 +1,156 @@
+{% extends 'myapp/base.html' %} <!-- Add this for inheritance -->
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  {% block title %} Omtecweb Admin Panel | Profile {% endblock %}
+</head>
+<body>
+  {% block content %}
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Profile</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="">Setting</a></li>
+            <li class="breadcrumb-item active">Profile</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+    <!-- {{request.user.username}} -->
+    <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3">
+          <!-- Profile Image -->
+          <div class="card card-primary card-outline">
+            <div class="card-body box-profile">
+              <div class="text-center">
+                <div id="new_user_image">
+                  <img class="profile-user-img img-fluid img-circle"
+                    src="{{request.user.avatar.url}}"
+                    alt="User profile picture">
+                </div>
+                <br>
+                {{request.user.username}}
+                {{request.user.email}}<br>
+                {{request.user.user_group_id}}
+              </div>
+
+              <h3 class="profile-username text-center"></h3>
+
+              <p class="text-muted text-center"></p>
+
+              <ul class="list-group list-group-unbordered mb-3">
+                <li class="list-group-item">
+                  <b>Joined On</b> <a class="float-right">{{request.user.created_date}}</a>
+                </li>
+                
+                  <li class="list-group-item">
+                    <b>Last Modified On</b> <a class="float-right">{{request.user.modified_date}}</a>
+                  </li>
+              </ul>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+          <div class="card">
+            <div class="card-body">
+              <div class="tab-content">
+                <div class="active tab-pane" id="settings">
+                  <form class="form-horizontal" action="{% url 'updateprofileview' request.user.user_id %}" enctype="multipart/form-data" method="POST">{% csrf_token %}
+                    <div class="form-group row">
+                      <label for="email" class="col-sm-3 col-form-label">First Name</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="email" name="first_name" placeholder="Enter First Name" value="{% if request.user.first_name != None %}{{request.user.first_name}} {% endif %}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="email" class="col-sm-3 col-form-label">Last Name</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="email" name="last_name" placeholder="Enter Last Name" value="{% if request.user.last_name != None %}{{request.user.last_name}} {% endif %}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="email" class="col-sm-3 col-form-label">Code</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="email" name="code" placeholder="Enter code" value="{% if request.user.code != None %}{{request.user.code}} {% endif %}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="email" class="col-sm-3 col-form-label">IP</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="email" name="ip" placeholder="Enter Ip" value="{% if request.user.ip != None %}{{request.user.ip}} {% endif %}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="email" class="col-sm-3 col-form-label">Address</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="email" name="address" placeholder="Enter The Address" value="{% if request.user.address != None %}{{request.user.address}} {% endif %}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="email" class="col-sm-3 col-form-label">Phone Number</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="email" name="phone_number" placeholder="Enter Phone Number" value="{% if request.user.phone_number != None %}{{request.user.phone_number}} {% endif %}">
+                      </div>
+                    </div>
+                    <div class="form-group row" hidden="">
+                      <label for="email" class="col-sm-3 col-form-label">Created By</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="email" name="created_by" placeholder="Email" value="{{request.user.user_id}}">
+                      </div>
+                    </div>
+                    <div class="form-group row" hidden>
+                      <label for="email" class="col-sm-3 col-form-label">Modified By</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="email" name="modified_by" placeholder="Email" value="{{request.user.user_id}}">
+                      </div>
+                    </div>
+                    <div class="form-group row" hidden>
+                      <label for="email" class="col-sm-3 col-form-label">Delete By</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="email" name="delete_flag" placeholder="Email" value="{{request.user.user_id}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="email" class="col-sm-3 col-form-label">Image</label>
+                      <div class="col-sm-9">
+                        <input type="file" id="avatar" name="avatar">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="offset-sm-3 col-sm-9">
+                        <button type="submit" class="btn btn-success">Update</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <!-- /.tab-pane -->
+              </div>
+              <!-- /.tab-content -->
+            </div><!-- /.card-body -->
+          </div>
+          <!-- /.nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+  {% endblock %}
+</body>
+</html>

@@ -1,0 +1,152 @@
+{% extends 'myapp/base.html' %} <!-- Add this for inheritance -->
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  {% block title %} Omtecweb admin panel | tax {% endblock %}
+</head>
+<body>
+  {% block content %}
+
+  <div class="content-header">
+    <div class="container-fluid">
+    </div>
+  </div>
+
+
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <!-- <h1>Profile</h1> -->
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="">Setting</a></li>
+            <li class="breadcrumb-item active"><a href="{% url 'sitesetting' %}">Sitesetting</a></li>
+            <li class="breadcrumb-item active">Add varient</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+    <!-- {{request.user.username}} -->
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"></h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <form role="form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <label>Varient Name</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter varient name" value="{{varient.name}}">
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>Type</label>
+                                <select class="form-control" name="select_type" data-placeholder="Select a State" style="width: 100%;">
+                                    <option>Select type</option>
+                                    <option value="radio">Radio</option>
+                                    <option value="select">Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <label>Sort order</label>
+                                <input type="number" class="form-control" id="sort_order" name="sort_order" placeholder="Enter sort order" value="{{varient.sort_order}}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-4 form-group" hidden>
+                                <label for="email" class="col-sm-3 col-form-label">Created By</label>
+                                <input type="text" class="form-control" id="email" name="created_by" placeholder="Email" value="{% if varient %} {{varient.created_by}} {% else %} {{request.user.user_id}} {% endif %}">
+                              </div>
+                              <div class="form-group col-sm-4 form-group" hidden>
+                                <label for="email" class="col-sm-3 col-form-label">Modified By</label>
+                                <input type="text" class="form-control" id="email" name="modified_by" placeholder="Email" value="{{request.user.user_id}}">
+                              </div>
+                        </div>
+                        <!-- <div class="row"> -->
+                          <div class="input_fields_wrap">
+                            <h3>Variant Values <span class="btn btn-sm btn-primary add_field_button" id="addVariantValues" data-val="">Add</span></h3>
+                            <!-- <button class="add_field_button">Add More Fields</button> -->
+                              {% for i,j in res.items %}
+                              <div class="row">
+                              <div class="form-group col-sm-5">
+                                <label>Variant Value</label><input type="text" class="form-control" value="{{i}}" name="varient_value[]" placeholder="Variant Value">
+                              </div>
+                              <div class="form-group col-sm-5">
+                                <label>Sort order</label><input type="text" class="form-control" value="{{j}}" name="sort_order_value[]" placeholder="Variant Value">
+                              </div>
+                                <!-- <button class="form-control">Remove</button> -->
+                                <a href="#" class="remove_field">Remove</a>
+                              </div>
+                              {% endfor %}
+                            </div>
+                          </div>
+                    </div>
+                    </div>
+                    <div class="card-footer">
+                      <button type="submit" class="btn btn-primary">{% if varient %}Update{% else %}Submit{% endif %}</button>
+                    </div>
+                  </form>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+  <!-- /.content -->
+  {% endblock %}
+
+  {% block js %}
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+  <script>
+    $(function () {
+        // Summernote
+        //   $('.textarea').summernote()
+        
+    });
+    $(document).ready(function() {
+      var max_fields      = 5; //maximum input boxes allowed
+      var wrapper         = $(".input_fields_wrap"); //Fields wrapper
+      var add_button      = $(".add_field_button"); //Add button ID
+     
+      var x = 1; //initlal text box count
+        
+
+      $(add_button).click(function(e){
+        e.preventDefault();
+        if(x < max_fields){ 
+          $(wrapper).append('<div class="row"><div class="form-group col-sm-5"><label>Variant Value</label><input type="text" class="form-control" value="" name="varient_value[]" placeholder="Variant Value"></div><div class="form-group col-sm-5"><label>Sort order</label><input type="text" class="form-control" value="" name="sort_order_value[]" placeholder="Variant Value"></div><a href="#" class="remove_field">Remove</a></div>');
+          x++; 
+        }
+      });
+   
+      $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+       
+  		e.preventDefault(); 
+  		$(this).parent('div').remove(); 
+  		x--;
+      })
+    });
+  </script>
+  
+  {% endblock %}
+</body>
+</html>

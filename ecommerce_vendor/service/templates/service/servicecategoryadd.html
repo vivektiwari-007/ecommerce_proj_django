@@ -1,0 +1,161 @@
+{% extends 'myapp/base.html' %} <!-- Add this for inheritance -->
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome Home</title>
+</head>
+<body>
+  {% block content %}
+
+  <div class="content-header">
+    <div class="container-fluid">
+    </div>
+  </div>
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <!-- <h1>Profile</h1> -->
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="">Service</a></li>
+            <li class="breadcrumb-item active"><a href="{% url 'servicecategorydetail' %}">Service Category</a></li>
+            <li class="breadcrumb-item active">Add servicecategory</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+    <!-- {{request.user.username}} -->
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <!-- <h3 class="card-title">DataTable with minimal features & hover style</h3> -->
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <form role="form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="form-group col-sm-4">
+                          <label for="exampleInputEmail1">Service category name</label>
+                          <input type="text" class="form-control" id="name" name="name" placeholder="Enter service category name" value="{{servicecategory.name}}">
+                        </div>
+                        <div class="form-group col-sm-4">
+                          <label for="exampleInputEmail1">Sort Order</label>
+                          <input type="text" class="form-control" id="sort_order" name="sort_order" placeholder="Enter Sort Order" value="{{servicecategory.sort_order}}">
+                        </div>
+                        <div class="form-group col-sm-4">
+                          <label>Active</label>
+                          <select class="form-control" name="is_active" data-placeholder="Select a State" style="width: 100%;">
+                            <option>---Select Active---</option>
+                            <option {% if servicecategory.is_active == True %} selected {% endif %} value="True">Yes</option>
+                            <option {% if servicecategory.is_active == False %} selected {% endif %} value="False">No</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col-sm-6">
+                          <label for="email">Image</label>
+                          <input type="file" class="form-control" id="image" name="image" value="{{blog.image.url}}">
+                          {% if servicecategory %}
+                          <img class="profile-user-img img-fluid img-circle"
+                            src="{{servicecategory.image.url}}"
+                            alt="User profile picture">
+                          {% endif %}
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col-sm-6">
+                          <label>Parent</label>
+                          <select class="form-control" name="parent_id" data-placeholder="Select Parent Id" style="width: 100%;">
+                          <option value="">---- Select Category ----</option>
+                          {% for i in sc %}
+                          {% if i.name == servicecategory.name %}
+                            <option value="{{servicecategory.name}}">{{servicecategory.name}}</option>
+                          {% elif i.name != servicecategory.name %}
+                            <option value="{{i.name}}">{{i.name}}</option>
+                          {% endif %}
+                          {% endfor %}
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group row" hidden>
+                        <label for="email" class="col-sm-3 col-form-label">Created By</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="email" name="created_by" placeholder="Email" value="{% if servicecategory.created_by %} {{servicecategory.created_by}} {% else %} {{request.user.user_id}} {% endif %}">
+                        </div>
+                      </div>
+                      <div class="form-group row" hidden>
+                        <label for="email" class="col-sm-3 col-form-label">Modified By</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="email" name="modified_by" placeholder="Email" value="{{request.user.user_id}}">
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card card-primary card-outline">
+                      <div class="card-header">
+                        <h3 class="card-title">
+                          <i class="fas fa-edit"></i>
+                          More Information
+                        </h3>
+                      </div>
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="form-group col-sm-6">
+                            <label for="exampleInputEmail1">Meta title</label>
+                            <input type="text" class="form-control" id="title" name="meta_tag_title" placeholder="Enter meta Title" value="{{servicecategory.meta_tag_title}}">
+                          </div>
+                          <div class="form-group col-sm-6">
+                            <label for="exampleInputEmail1">Meta keyword</label>
+                            <input type="text" class="form-control" id="title" name="meta_tag_keyword" placeholder="Enter meta keyword" value="{{servicecategory.meta_tag_keyword}}">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="form-group col-sm-8">
+                            <label for="exampleInputEmail1">Meta discripation</label>
+                            <textarea class="textarea" placeholder="Place some text here" name="meta_tag_description"
+                              style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{servicecategory.meta_tag_description}}</textarea>
+                          </div>
+                        </div>
+                       </div>
+                       </div>
+                    <div class="card-footer">
+                      <button type="submit" class="btn btn-primary">{% if servicecategory %}Update{% else %}Submit{% endif %}</button>
+                    </div>
+                  </form>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+  <!-- /.content -->
+  {% endblock %}
+
+  {% block js %}
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+  <script>
+    $(function () {
+      // Summernote
+      $('.textarea').summernote()
+    })
+  </script>
+  
+  {% endblock %}
+</body>
+</html>

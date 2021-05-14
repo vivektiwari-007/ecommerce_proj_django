@@ -1,0 +1,234 @@
+{% extends 'myapp/base.html' %} <!-- Add this for inheritance -->
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  {% block title %} Omtecweb Admin Panel | Profile {% endblock %}
+</head>
+<body>
+  {% block content %}
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Profile</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="">Setting</a></li>
+            <li class="breadcrumb-item active">Site setting</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="card">
+    <div class="card-header p-2">
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">SEO</a></li>
+        <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">Social</a></li>
+        <li class="nav-item"><a class="nav-link" href="#tab_3" data-toggle="tab">Veriant</a></li>
+      </ul>
+    </div><!-- /.card-header -->
+    <div class="card-body">
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab_1">
+          <section class="content">
+            <div class="container-fluid">
+                <div class="card">
+                    <div class="card-body">
+                      <div class="tab-content">
+                        <div class="active tab-pane" id="settings">
+                          {% for i in seo %}
+                          <form class="form-horizontal" action="{% url 'seoupdate' i.seo_id %}" enctype="multipart/form-data" method="POST">{% csrf_token %}
+                            <div class="form-group row">
+                              <label for="email" class="col-sm-3 col-form-label">Meta title</label>
+                              <div class="col-sm-9">
+                                <input type="text" class="form-control" id="meta_title" name="meta_title"  placeholder="Enter title" value="{{i.meta_title}}">
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="email" class="col-sm-3 col-form-label">Meta description</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control" id="meta_discriptor" name="meta_discriptor"  placeholder="Enter description" value="{{i.meta_discriptor}}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="email" class="col-sm-3 col-form-label">Meta keywords</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control" id="meta_keyword" name="meta_keyword"  placeholder="Enter keywords" value="{{i.meta_keyword}}">
+                                </div>
+                            </div>
+                            <div class="row">
+                              <div class="form-group col-sm-4 form-group" hidden>
+                                  <label for="email" class="col-sm-3 col-form-label">Created By</label>
+                                  <input type="text" class="form-control" id="email" name="created_by" placeholder="Email" value="{% if i %} {{i.created_by}} {% else %} {{request.user.user_id}} {% endif %}">
+                                </div>
+                                <div class="form-group col-sm-4 form-group" hidden>
+                                  <label for="email" class="col-sm-3 col-form-label">Modified By</label>
+                                  <input type="text" class="form-control" id="email" name="modified_by" placeholder="Email" value="{{request.user.user_id}}">
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <div class="form-group row">
+                              <div class="offset-sm-3 col-sm-9">
+                                <button type="submit" class="btn btn-success">Update</button>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                <!-- /.col -->
+                </div>
+              <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </section>
+        </div>
+        <!-- /.tab-pane -->
+        <div class="tab-pane" id="tab_2">
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-body">
+                          <div class="tab-content">
+                            <div class="active tab-pane" id="settings">
+                              {% for i in social %}
+                              <form class="form-horizontal" action="{% url 'socialupdate' i.social_id %}" enctype="multipart/form-data" method="POST">{% csrf_token %}
+                                <div class="form-group row">
+                                  <label for="email" class="col-sm-3 col-form-label">Instagram</label>
+                                  <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="instagram" name="instagram"  placeholder="Enter instagram link" value="{{i.instagram}}">
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="email" class="col-sm-3 col-form-label">Twitter</label>
+                                    <div class="col-sm-9">
+                                      <input type="text" class="form-control" id="twitter" name="twitter"  placeholder="Enter twitter link" value="{{i.twitter}}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="email" class="col-sm-3 col-form-label">Facebook</label>
+                                    <div class="col-sm-9">
+                                      <input type="text" class="form-control" id="facebook" name="facebook"  placeholder="Enter facebook link" value="{{i.facebook}}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="email" class="col-sm-3 col-form-label">Youtube</label>
+                                    <div class="col-sm-9">
+                                      <input type="text" class="form-control" id="youtube" name="youtube"  placeholder="Enter youtube link" value="{{i.youtube}}">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <div class="form-group col-sm-4 form-group" hidden>
+                                      <label for="email" class="col-sm-3 col-form-label">Created By</label>
+                                      <input type="text" class="form-control" id="email" name="created_by" placeholder="Email" value="{% if i %} {{i.created_by}} {% else %} {{request.user.user_id}} {% endif %}">
+                                    </div>
+                                    <div class="form-group col-sm-4 form-group" hidden>
+                                      <label for="email" class="col-sm-3 col-form-label">Modified By</label>
+                                      <input type="text" class="form-control" id="email" name="modified_by" placeholder="Email" value="{{request.user.user_id}}">
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                <div class="form-group row">
+                                  <div class="offset-sm-3 col-sm-9">
+                                    <button type="submit" class="btn btn-success">Update</button>
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                    <!-- /.col -->
+                    </div>
+                  <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </section>
+        </div>
+
+        <div class="tab-pane" id="tab_3">
+            <section class="content">
+              <div class="container-fluid">
+                  <div class="card">
+                      <div class="card-body">
+                        <div class="tab-content">
+                          <div class="active tab-pane" id="settings">
+                            <div class="content-header">
+                                <div class="container-fluid">
+                                  <div class="row mb-2">
+                                    <div class="col-sm-6">
+                                         <ol class="breadcrumb float-sm">
+                                        <li class="breadcrumb-item"><a href="">Setting</a></li>
+                                        <li class="breadcrumb-item active">site setting</li>
+                                        <li class="breadcrumb-item active">varient</li>
+                                      </ol>
+                                    </div><!-- /.col -->
+                                      <div class="col-sm-6">
+                                          <div class="breadcrumb float-sm-right">
+                                            <a href="{% url 'varientadd' %}"><button type="button" class="btn btn-block btn-secondary"> + Add Varient </button></a>
+                                          </div>
+                                      </div>
+                                  </div><!-- /.row -->
+                                </div><!-- /.container-fluid -->
+                            </div>
+                            <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Sort order</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for i in varient %}
+                            <tr>
+                                <td>{{i.name}}</td>
+                                <td>{{i.sort_order}}</td>
+                                <td>
+                                <a href="{% url 'varientupdate' i.varient_id %}"><i class="fas fa-edit"></i></a>
+                                <a href="{% url 'varientdelete' i.varient_id %}"><i class="fas fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </table>
+                          </div>
+                        </div>
+                        </div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+          </section>
+          </div>
+      </div>
+      <!-- /.tab-content -->
+    </div><!-- /.card-body -->
+  </div>
+  {% endblock %}
+
+  {% block js %}
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script>
+    $(function () {
+        $("#example1").DataTable({
+        "responsive": true,
+        "autoWidth": false,
+        });
+        $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        });
+    });
+    </script>
+  {% endblock %}
+</body>
+</html>
+

@@ -1,0 +1,1015 @@
+{% extends 'myapp/base.html' %}
+{% load static %} <!-- Add this for inheritance -->
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome Home</title>
+</head>
+<body>
+  {% block content %}
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="">Setting</a></li>
+            <li class="breadcrumb-item"><a href="">Permission</a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+    <!-- {{request.user.username}} -->
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"></h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <form role="form" method="POST">{% csrf_token %}
+                      <input type="hidden" id="user_id" name="user_id" value="{{userdetail.user_id}}">
+                      {% if not permissions %}
+                      <input type="hidden" id="action_form" name="action_form" value="add">
+                      {% else %}
+                      <input type="hidden" id="action_form" name="action_form" value="update">
+                      <input type="hidden" id="action_form_update_id" name="action_form_update_id" value="{{permissions.permission_id}}">
+                      {% endif %}
+                  <div class="card-body">
+                    <div class="col-sm-12 ">
+                      <div class="float-sm-right">
+                        <input type="checkbox" id="selectall" onClick="selectall12(this)">
+                        <h4><label for="coustomer">Select All</label></h4>
+                      </div>
+                    </div>
+                    <h4><label>Admin </label></h4><hr>
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <div class="form-group clearfix">
+                            <!-- <input type="checkbox" id="adminlist" onClick="adminlist12(this)"> -->
+                            <label for="coustomer"> AdminList</label><br>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="UserDetail" id="UserDetail" {% if "UserDetail" in permissions.json_permission %} checked {% endif %}>
+                                <label>Show AdminList</label>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="UserAdd" id="UserAdd" {% if "UserAdd" in permissions.json_permission %} checked {% endif %}>
+                                <label>Add AdminList</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="UserUpdate" id="UserUpdate" {% if "UserUpdate" in permissions.json_permission %} checked {% endif %}>
+                                <label>Update AdminList</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="UserDelete" id="UserDelete" {% if "UserDelete" in permissions.json_permission %} checked {% endif %}>
+                                <label>Delete AdminList</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline">
+                              <!-- <input type="checkbox" name=" permission[]" value="admingrouplist" id="admingrouplist" onClick="admingrouplist12(this)"> -->
+                              <label for="coustomergroup"> Admin group list </label>
+                              <div class="form-group clearfix">
+                                <div class="icheck-success d-inline m-5">
+                                  <input type="checkbox" name="permission[]" value="UserGroupDetail" id="UserGroupDetail" {% if "UserGroupDetail" in permissions.json_permission %} checked {% endif %}>
+                                  <label>Show AdminGroupList</label>
+                                </div>
+                              </div>
+                              <div class="form-group clearfix">
+                                <div class="icheck-success d-inline m-5">
+                                  <input type="checkbox" name="permission[]" value="UserGroupAdd" id="UserGroupAdd" {% if "UserGroupAdd" in permissions.json_permission %} checked {% endif %}>
+                                  <label>Add AdminGroupList</label>
+                                </div>
+                              </div>
+                              <div class="form-group clearfix">
+                                <div class="icheck-success d-inline m-5">
+                                  <input type="checkbox" name="permission[]" value="UserGroupUpdate" id="UserGroupUpdate" {% if "UserGroupUpdate" in permissions.json_permission %} checked {% endif %}>
+                                  <label>Update AdminGroupList</label>
+                                </div>
+                              </div>
+                              <div class="form-group clearfix">
+                                <div class="icheck-success d-inline m-5">
+                                  <input type="checkbox" name="permission[]" value="UserGroupDelete" id="UserGroupDelete" {% if "UserGroupDelete" in permissions.json_permission %} checked {% endif %}>
+                                  <label>Delete AdminGroupList</label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <hr><hr>
+                    <h4><label>CMS</label></h4><hr>
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <div class="form-group clearfix">
+                            <!-- <input type="checkbox" name="permission[]" value="pagegroup" id="pagegroup"> -->
+                            <label for="coustomer"> Pagegroup</label><br>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="PageGroupDetail" id="PageGroupDetail" {% if "PageGroupDetail" in permissions.json_permission %} checked {% endif %}>
+                                <label>Show Pagegroup</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="PageGroupAdd" id="PageGroupAdd" {% if "PageGroupAdd" in permissions.json_permission %} checked {% endif %}>
+                                <label>Add Pagegroup</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="PageGroupUpdate" id="PageGroupUpdate" {% if "PageGroupUpdate" in permissions.json_permission %} checked {% endif %}>
+                                <label>Update Pagegroup</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="PageGroupDelete" id="PageGroupDelete" {% if "PageGroupDelete" in permissions.json_permission %} checked {% endif %}>
+                                <label>Delete Pagegroup</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <div class="form-group clearfix">
+                            <!-- <input type="checkbox" name="permission[]" value="page" id="page"> -->
+                            <label for="coustomer"> Page</label><br>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="PageDetail" id="PageDetail" {% if "PageDetail" in permissions.json_permission %} checked {% endif %}>
+                                <label>Show Page</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="PageAdd" id="PageAdd" {% if "PageAdd" in permissions.json_permission %} checked {% endif %}>
+                                <label>Add Page</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="PageUpdate" id="PageUpdate" {% if "PageUpdate" in permissions.json_permission %} checked {% endif %}>
+                                <label>Update Page</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="PageDelete" id="PageDelete" {% if "PageDelete" in permissions.json_permission %} checked {% endif %}>
+                                <label>Delete Page</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>  
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <div class="form-group clearfix">
+                            <!-- <input type="checkbox" name="permission[]" value="banner" id="banner"> -->
+                            <label for="coustomer"> Banner</label><br>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="BannerDetail" id="BannerDetail" {% if "BannerDetail" in permissions.json_permission %} checked {% endif %}>
+                                <label>Show Banner</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="BannerAdd" id="BannerAdd" {% if "BannerAdd" in permissions.json_permission %} checked {% endif %}>
+                                <label>Add Banner</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="BannerUpdate" id="BannerUpdate" {% if "BannerUpdate" in permissions.json_permission %} checked {% endif %}>
+                                <label>Update Banner</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="BannerDelete" id="BannerDelete" {% if "BannerDelete" in permissions.json_permission %} checked {% endif %}>
+                                <label>Delete Banner</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>  
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <div class="form-group clearfix">
+                            <!-- <input type="checkbox" name="permission[]" value="blog" id="blog"> -->
+                            <label for="coustomer"> Blog</label><br>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="BlogDetail" id="BlogDetail" {% if "BlogDetail" in permissions.json_permission %} checked {% endif %}>
+                                <label>Show Blog</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="BlogAdd" id="BlogAdd" {% if "BlogAdd" in permissions.json_permission %} checked {% endif %}>
+                                <label>Add Blog</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="BlogUpdate" id="BlogUpdate" {% if "BlogUpdate" in permissions.json_permission %} checked {% endif %}>
+                                <label>Update Blog</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="BlogDelete" id="BlogDelete" {% if "BlogDelete" in permissions.json_permission %} checked {% endif %}>
+                                <label>Delete Blog</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>   
+                    </div><hr>
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <div class="form-group clearfix">
+                            <!-- <input type="checkbox" name="permission[]" value="testimonial" id="testimonial"> -->
+                            <label for="coustomer"> Testimonial</label><br>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="TestimonialDetail" id="TestimonialDetail" {% if "TestimonialDetail" in permissions.json_permission %} checked {% endif %}>
+                                <label>Show Testimonial</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="TestimonialAdd" id="TestimonialAdd" {% if "TestimonialAdd" in permissions.json_permission %} checked {% endif %}>
+                                <label>Add Testimonial</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="TestimonialUpdate" id="TestimonialUpdate" {% if "TestimonialUpdate" in permissions.json_permission %} checked {% endif %}>
+                                <label>Update Testimonial</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="TestimonialDelete" id="TestimonialDelete" {% if "TestimonialDelete" in permissions.json_permission %} checked {% endif %}>
+                                <label>Delete Testimonial</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <div class="form-group clearfix">
+                            <!-- <input type="checkbox" name="permission[]" value="newsevent" id="newsevent"> -->
+                            <label for="coustomer"> News&event</label><br>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="NewsEventDetail" id="NewsEventDetail" {% if "NewsEventDetail" in permissions.json_permission %} checked {% endif %}>
+                                <label>Show News&event</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="NewsEventAdd" id="NewsEventAdd" {% if "NewsEventAdd" in permissions.json_permission %} checked {% endif %}>
+                                <label>Add News&event</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="NewsEventUpdate" id="NewsEventUpdate" {% if "NewsEventUpdate" in permissions.json_permission %} checked {% endif %}>
+                                <label>Update News&event</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="NewsEventDelete" id="NewsEventDelete" {% if "NewsEventDelete" in permissions.json_permission %} checked {% endif %}>
+                                <label>Delete News&event</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <div class="form-group clearfix">
+                            <!-- <input type="checkbox" name="permission[]" value="contactus" id="contactus"> -->
+                            <label for="coustomer"> Contactus</label><br>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="ContactUsDetail" id="ContactUsDetail" {% if "ContactUsDetail" in permissions.json_permission %} checked {% endif %}>
+                                <label>Show Contactus</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="ContactUsUpdate" id="ContactUsUpdate" {% if "ContactUsUpdate" in permissions.json_permission %} checked {% endif %}>
+                                <label>Update Contactus</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div><hr><hr>
+                    <h4><label>Services</label></h4><hr>
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <div class="form-group clearfix">
+                            <!-- <input type="checkbox" name="permission[]" value="servicecategory" id="servicecategory"> -->
+                            <label for="coustomer">Servicecategory</label><br>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="ServiceCategoryDetail" id="ServiceCategoryDetail" {% if "ServiceCategoryDetail" in permissions.json_permission %} checked {% endif %}>
+                                <label>Show Servicecategory</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="ServiceCategoryAdd" id="ServiceCategoryAdd" {% if "ServiceCategoryAdd" in permissions.json_permission %} checked {% endif %}>
+                                <label>Add Servicecategory</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="ServiceCategoryUpdate" id="ServiceCategoryUpdate" {% if "ServiceCategoryUpdate" in permissions.json_permission %} checked {% endif %}>
+                                <label>Update Servicecategory</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="ServiceCategoryDelete" id="ServiceCategoryDelete" {% if "ServiceCategoryDelete" in permissions.json_permission %} checked {% endif %}>
+                                <label>Delete Servicecategory</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <div class="form-group clearfix">
+                            <!-- <input type="checkbox" name="permission[]" value="servicelist" id="servicelist"> -->
+                            <label for="coustomer">Servicelist</label><br>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="ServiceListDetail" id="ServiceListDetail" {% if "ServiceListDetail" in permissions.json_permission %} checked {% endif %}>
+                                <label>Show Servicelist</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="ServiceListAdd" id="ServiceListAdd" {% if "ServiceListAdd" in permissions.json_permission %} checked {% endif %}>
+                                <label>Add Servicelist</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="ServiceListUpdate" id="ServiceListUpdate" {% if "ServiceListUpdate" in permissions.json_permission %} checked {% endif %}>
+                                <label>Update Servicelist</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="ServiceListDelete" id="ServiceListDelete" {% if "ServiceListDelete" in permissions.json_permission %} checked {% endif %}>
+                                <label>Delete Servicelist</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div><hr><hr>
+                    <h4><label>Catalog</label></h4><hr>
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <div class="form-group clearfix">
+                            <!-- <input type="checkbox" name="permission[]" value="category" id="category"> -->
+                            <label for="coustomer">Category</label><br>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="CategoryDetail" id="CategoryDetail" {% if "CategoryDetail" in permissions.json_permission %} checked {% endif %}>
+                                <label>Show Category</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="CategoryAdd" id="CategoryAdd" {% if "CategoryAdd" in permissions.json_permission %} checked {% endif %}>
+                                <label>Add Category</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="CategoryUpdate" id="CategoryUpdate" {% if "CategoryUpdate" in permissions.json_permission %} checked {% endif %}>
+                                <label>Update Category</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="CategoryDelete" id="CategoryDelete" {% if "CategoryDelete" in permissions.json_permission %} checked {% endif %}>
+                                <label>Delete Category</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <div class="form-group clearfix">
+                            <!-- <input type="checkbox" name="permission[]" value="brand" id="brand"> -->
+                            <label for="coustomer">Brand</label><br>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="BrandDetail" id="BrandDetail" {% if "BrandDetail" in permissions.json_permission %} checked {% endif %}>
+                                <label>Show Brand</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="BrandAdd" id="BrandAdd" {% if "BrandAdd" in permissions.json_permission %} checked {% endif %}>
+                                <label>Add Brand</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="BrandUpdate" id="BrandUpdate" {% if "BrandUpdate" in permissions.json_permission %} checked {% endif %}>
+                                <label>Update Brand</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="BrandDelete" id="BrandDelete" {% if "BrandDelete" in permissions.json_permission %} checked {% endif %}>
+                                <label>Delete Brand</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <div class="form-group clearfix">
+                            <!-- <input type="checkbox" name="permission[]" value="coupon" id="coupon"> -->
+                            <label for="coustomer">Coupon</label><br>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="CouponDetail" id="CouponDetail" {% if "CouponDetail" in permissions.json_permission %} checked {% endif %}>
+                                <label>Show Coupon</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="CouponAdd" id="CouponAdd" {% if "CouponAdd" in permissions.json_permission %} checked {% endif %}>
+                                <label>Add Coupon</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="CouponUpdate" id="CouponUpdate" {% if "CouponUpdate" in permissions.json_permission %} checked {% endif %}>
+                                <label>Update Coupon</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="CouponDelete" id="CouponDelete" {% if "CouponDelete" in permissions.json_permission %} checked {% endif %}>
+                                <label>Delete Coupon</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <div class="form-group clearfix">
+                            <!-- <input type="checkbox" name="permission[]" value="ProductDetail" id="ProductDetail"> -->
+                            <label for="coustomer">Product</label><br>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="ProductDetail" id="ProductDetail" {% if "ProductDetail" in permissions.json_permission %} checked {% endif %}>
+                                <label>Show Product</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="ProductAdd" id="ProductAdd" {% if "ProductAdd" in permissions.json_permission %} checked {% endif %}>
+                                <label>Add Product</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="ProductUpdate" id="ProductUpdate" {% if "ProductUpdate" in permissions.json_permission %} checked {% endif %}>
+                                <label>Update Product</label>
+                              </div>
+                            </div>
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline m-5">
+                                <input type="checkbox" name="permission[]" value="ProductDelete" id="ProductDelete" {% if "ProductDelete" in permissions.json_permission %} checked {% endif %}>
+                                <label>Delete Product</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div><hr><hr>
+                  <h4><label>Setting</label></h4><hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <div class="form-group clearfix">
+                          <!-- <input type="checkbox" name="permission[]" value="category" id="category"> -->
+                          <label for="coustomer">Role</label><br>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="RoleDetail" id="RoleDetail" {% if "RoleDetail" in permissions.json_permission %} checked {% endif %}>
+                              <label>Show Role</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="RoleAdd" id="RoleAdd" {% if "RoleAdd" in permissions.json_permission %} checked {% endif %}>
+                              <label>Add Role</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="RoleUpdate" id="RoleUpdate" {% if "RoleUpdate" in permissions.json_permission %} checked {% endif %}>
+                              <label>Update Role</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="RoleDelete" id="RoleDelete" {% if "RoleDelete" in permissions.json_permission %} checked {% endif %}>
+                              <label>Delete Role</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <div class="form-group clearfix">
+                          <!-- <input type="checkbox" name="permission[]" value="category" id="category"> -->
+                          <label for="coustomer">Generalsetting</label><br>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="GeneralSettingdetail" id="GeneralSettingdetail" {% if "GeneralSettingdetail" in permissions.json_permission %} checked {% endif %}>
+                              <label>Show Generalsetting/Homepage</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="GeneralSettingUpdate" id="GeneralSettingUpdate" {% if "GeneralSettingUpdate" in permissions.json_permission %} checked {% endif %}>
+                              <label>Update Generalsetting</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="HomePageSettingUpdate" id="HomePageSettingUpdate" {% if "HomePageSettingUpdate" in permissions.json_permission %} checked {% endif %}>
+                              <label>Update Homepagesetting</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <div class="form-group clearfix">
+                          <!-- <input type="checkbox" name="permission[]" value="SiteSetting" id="SiteSetting"> -->
+                          <label for="coustomer">Sitesetting</label><br>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="SiteSetting" id="SiteSetting" {% if "SiteSetting" in permissions.json_permission %} checked {% endif %}>
+                              <label>Show Sitesetting</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="SeoUpdate" id="SeoUpdate" {% if "SeoUpdate" in permissions.json_permission %} checked {% endif %}>
+                              <label>Update Seo</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="SocialUpdate" id="SocialUpdate" {% if "SocialUpdate" in permissions.json_permission %} checked {% endif %}>
+                              <label>Update Social</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <div class="form-group clearfix">
+                          <!-- <input type="checkbox" name="permission[]" value="category" id="category"> -->
+                          <label for="coustomer">Sitesetting/varient</label><br>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="VarientAdd" id="VarientAdd" {% if "VarientAdd" in permissions.json_permission %} checked {% endif %}>
+                              <label>Add varient</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="VarientUpdate" id="VarientUpdate" {% if "VarientUpdate" in permissions.json_permission %} checked {% endif %}>
+                              <label>Update varient</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="VarientDelete" id="VarientDelete" {% if "VarientDelete" in permissions.json_permission %} checked {% endif %}>
+                              <label>Delete varient</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div><hr><hr>
+                  <h4><label>Setting/Localization</label></h4><hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <div class="form-group clearfix">
+                          <!-- <input type="checkbox" name="permission[]" value="CountryDetail" id="CountryDetail"> -->
+                          <label for="coustomer">Country</label><br>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="CountryDetail" id="CountryDetail" {% if "CountryDetail" in permissions.json_permission %} checked {% endif %}>
+                              <label>Show Country</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="CountryAdd" id="CountryAdd" {% if "CountryAdd" in permissions.json_permission %} checked {% endif %}>
+                              <label>Add Country</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="CountryUpdate" id="CountryUpdate" {% if "CountryUpdate" in permissions.json_permission %} checked {% endif %}>
+                              <label>Update Country</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="CountryDelete" id="CountryDelete" {% if "CountryDelete" in permissions.json_permission %} checked {% endif %}>
+                              <label>Delete Country</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <div class="form-group clearfix">
+                          <!-- <input type="checkbox" name="permission[]" value="category" id="category"> -->
+                          <label for="coustomer">Zone</label><br>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="ZoneDetail" id="ZoneDetail" {% if "ZoneDetail" in permissions.json_permission %} checked {% endif %}>
+                              <label>Show Zone</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="ZoneAdd" id="ZoneAdd" {% if "ZoneAdd" in permissions.json_permission %} checked {% endif %}>
+                              <label>Add Zone</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="ZoneUpdate" id="ZoneUpdate" {% if "ZoneUpdate" in permissions.json_permission %} checked {% endif %}>
+                              <label>Update Zone</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="ZoneDelete" id="ZoneDelete" {% if "ZoneDelete" in permissions.json_permission %} checked {% endif %}>
+                              <label>Delete Zone</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <div class="form-group clearfix">
+                          <!-- <input type="checkbox" name="permission[]" value="category" id="category"> -->
+                          <label for="coustomer">Deliverylocation</label><br>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="DeliveryLocationDetail" id="DeliveryLocationDetail" {% if "DeliveryLocationDetail" in permissions.json_permission %} checked {% endif %}>
+                              <label>Show Deliverylocation</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="DeliveryLocationAdd" id="DeliveryLocationAdd" {% if "DeliveryLocationAdd" in permissions.json_permission %} checked {% endif %}>
+                              <label>Add Deliverylocation</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="DeliveryLocationUpdate" id="DeliveryLocationUpdate" {% if "DeliveryLocationUpdate" in permissions.json_permission %} checked {% endif %}>
+                              <label>Update Deliverylocation</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="DeliveryLocationDelete" id="DeliveryLocationDelete" {% if "DeliveryLocationDelete" in permissions.json_permission %} checked {% endif %}>
+                              <label>Delete Deliverylocation</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <div class="form-group clearfix">
+                          <!-- <input type="checkbox" name="permission[]" value="LanguageDetail" id="LanguageDetail"> -->
+                          <label for="coustomer">Language</label><br>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="LanguageDetail" id="LanguageDetail" {% if "LanguageDetail" in permissions.json_permission %} checked {% endif %}>
+                              <label>Show Language</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="LanguageAdd" id="LanguageAdd" {% if "LanguageAdd" in permissions.json_permission %} checked {% endif %}>
+                              <label>Add Language</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="LanguageUpdate" id="LanguageUpdate" {% if "LanguageUpdate" in permissions.json_permission %} checked {% endif %}>
+                              <label>Update Language</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="LanguageDelete" id="LanguageDelete" {% if "LanguageDelete" in permissions.json_permission %} checked {% endif %}>
+                              <label>Delete Language</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div><hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <div class="form-group clearfix">
+                          <!-- <input type="checkbox" name="permission[]" value="CurrencyDetail" id="CurrencyDetail"> -->
+                          <label for="coustomer">Currency</label><br>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="CurrencyDetail" id="CurrencyDetail" {% if "CurrencyDetail" in permissions.json_permission %} checked {% endif %}>
+                              <label>Show Currency</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="CurrencyAdd" id="CurrencyAdd" {% if "CurrencyAdd" in permissions.json_permission %} checked {% endif %}>
+                              <label>Add Currency</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="CurrencyUpdate" id="CurrencyUpdate" {% if "CurrencyUpdate" in permissions.json_permission %} checked {% endif %}>
+                              <label>Update Currency</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="CurrencyDelete" id="CurrencyDelete" {% if "CurrencyDelete" in permissions.json_permission %} checked {% endif %}>
+                              <label>Delete Currency</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <div class="form-group clearfix">
+                          <!-- <input type="checkbox" name="permission[]" value="TaxDetail" id="TaxDetail"> -->
+                          <label for="coustomer">Tax</label><br>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="TaxDetail" id="TaxDetail" {% if "TaxDetail" in permissions.json_permission %} checked {% endif %}>
+                              <label>Show Tax</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="TaxAdd" id="TaxAdd" {% if "TaxAdd" in permissions.json_permission %} checked {% endif %}>
+                              <label>Add Tax</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="TaxUpdate" id="TaxUpdate" {% if "TaxUpdate" in permissions.json_permission %} checked {% endif %}>
+                              <label>Update Tax</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="TaxDelete" id="TaxDelete" {% if "TaxDelete" in permissions.json_permission %} checked {% endif %}>
+                              <label>Delete Tax</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <div class="form-group clearfix">
+                          <!-- <input type="checkbox" name="permission[]" value="OrderStatusDetail" id="OrderStatusDetail"> -->
+                          <label for="coustomer">Orderstatus</label><br>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="OrderStatusDetail" id="OrderStatusDetail" {% if "OrderStatusDetail" in permissions.json_permission %} checked {% endif %}>
+                              <label>Show Orderstatus</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="OrderStatusAdd" id="OrderStatusAdd" {% if "OrderStatusAdd" in permissions.json_permission %} checked {% endif %}>
+                              <label>Add Orderstatus</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="OrderStatusUpdate" id="OrderStatusUpdate" {% if "OrderStatusUpdate" in permissions.json_permission %} checked {% endif %}>
+                              <label>Update Orderstatus</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="OrderStatusdelete" id="OrderStatusdelete" {% if "OrderStatusdelete" in permissions.json_permission %} checked {% endif %}>
+                              <label>Delete Orderstatus</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <div class="form-group clearfix">
+                          <!-- <input type="checkbox" name="permission[]" value="StockStatusDetail" id="StockStatusDetail"> -->
+                          <label for="coustomer">Stockstatus</label><br>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="StockStatusDetail" id="StockStatusDetail" {% if "StockStatusDetail" in permissions.json_permission %} checked {% endif %}>
+                              <label>Show Stockstatus</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="StockStatusAdd" id="StockStatusAdd" {% if "StockStatusAdd" in permissions.json_permission %} checked {% endif %}>
+                              <label>Add Stockstatus</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="StockStatusUpdate" id="StockStatusUpdate" {% if "StockStatusUpdate" in permissions.json_permission %} checked {% endif %}>
+                              <label>Update Stockstatus</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="StockStatusDelete" id="StockStatusDelete" {% if "StockStatusDelete" in permissions.json_permission %} checked {% endif %}>
+                              <label>Delete Stockstatus</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div><hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <div class="form-group clearfix">
+                          <!-- <input type="checkbox" name="permission[]" value="EmailTemplateDetail" id="EmailTemplateDetail"> -->
+                          <label for="coustomer">Emailtemplate</label><br>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="EmailTemplateDetail" id="EmailTemplateDetail" {% if "EmailTemplateDetail" in permissions.json_permission %} checked {% endif %}>
+                              <label>Show Emailtemplate</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="EmailTemplateUpdate" id="EmailTemplateUpdate" {% if "EmailTemplateUpdate" in permissions.json_permission %} checked {% endif %}>
+                              <label>Update Emailtemplate</label>
+                            </div>
+                          </div>
+                          <div class="form-group clearfix">
+                            <div class="icheck-success d-inline m-5">
+                              <input type="checkbox" name="permission[]" value="EmailTemplateDelete" id="EmailTemplateDelete" {% if "EmailTemplateDelete" in permissions.json_permission %} checked {% endif %}>
+                              <label>Delete Emailtemplate</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div><hr><hr>
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">{% if permissions %} Update {% else %} Submit {% endif %}</button>
+                  </div>
+                  </form>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+  <!-- /.content -->
+  {% endblock %}
+
+  {% block js %}
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script type="text/javascript">
+      // $( document ).ready(function() {
+        function selectall12(source) {
+            console.log( "ready!" );
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            for (var checkbox of checkboxes) {
+                checkbox.checked = source.checked;
+            }
+          };
+
+        // function adminlist12(source) {
+        //     // console.log( "ready!" );
+        //     // var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        //     // for (var checkbox of checkboxes) {
+        //     //     checkbox.checked = source.checked;
+        //     // }
+        //     // console.log(checkboxes)
+        //     // for (var checkbox of checkboxes) {
+        //     //   console.log(checkbox.checked)
+        //     //   checkbox.checked = this.checked;
+        //     // }
+        //     $('#UserDetail').not(this).prop('checked', source.checked);
+        //     $('#UserAdd').not(this).prop('checked', source.checked);
+        //     $('#UserUpdate').not(this).prop('checked', source.checked);
+        //     $('#UserDelete').not(this).prop('checked', source.checked);
+        //   };
+          // function admingrouplist12(source) {
+          //   $('#UserGroupAdd').not(this).prop('checked', source.checked);
+          //   $('#UserGroupDetail').not(this).prop('checked', source.checked);
+          //   $('#UserGroupUpdate').not(this).prop('checked', source.checked);
+          //   $('#UserGroupDelete').not(this).prop('checked', source.checked);
+          // };
+      // });
+      // function adminlist12() {
+      //   alert("hello");
+
+      //   $('#UserDetail').not(this).prop('checked', this.checked);
+      //   $('#UserAdd').not(this).prop('checked', this.checked);
+      //   $('#UserUpdate').not(this).prop('checked', this.checked);
+      //   $('#UserDelete').not(this).prop('checked', this.checked);
+      // };
+      // $("#adminlist").click(function(){
+      //   $('#UserDetail').not(this).prop('checked', this.checked);
+      //   $('#UserAdd').not(this).prop('checked', this.checked);
+      //   $('#UserUpdate').not(this).prop('checked', this.checked);
+      //   $('#UserDelete').not(this).prop('checked', this.checked);
+      // });
+    </script>
+  {% endblock %}
+</body>
+</html>
+
+
+
+

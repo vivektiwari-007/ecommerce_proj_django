@@ -1,0 +1,165 @@
+{% extends 'myapp/base.html' %} <!-- Add this for inheritance -->
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome Home</title>
+</head>
+<body>
+  {% block content %}
+
+  <div class="content-header">
+    <div class="container-fluid">
+    </div>
+  </div>
+
+
+  <section class="content">
+    <div class="container-fluid">
+      <!-- Info boxes -->
+      <div class="row">
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="info-box">
+            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Total user</span>
+              <span class="info-box-number">
+               {{user.count}}
+                <!-- <small>%</small> -->
+              </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="info-box mb-3">
+            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Active user</span>
+              <span class="info-box-number">{{count1}}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="info-box mb-3">
+            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">In-Active user</span>
+              <span class="info-box-number">{{count2}}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+
+
+
+      </div>
+      <!-- /.row -->
+      </div>
+  </section>
+
+
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+             <ol class="breadcrumb float-sm">
+            <li class="breadcrumb-item"><a href="">Admin</a></li>
+            <li class="breadcrumb-item active">User</li>
+          </ol>
+        </div><!-- /.col -->
+          <div class="col-sm-6">
+              <div class="breadcrumb float-sm-right">
+                <a href="{% url 'useradd' %}"><button type="button" class="btn btn-block btn-secondary btn-lg"> + Add New User </button></a>
+              </div>
+          </div>
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+
+  
+  
+  <!-- Content Header (Page header) -->
+  
+    <!-- {{request.user.username}} -->
+    <!-- Main content -->
+    <div class="card">
+        <div class="card-header">
+          <!-- <h3 class="card-title">DataTable with default features</h3> -->
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+          <table id="example1" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+              <th>First name</th>
+              <th>Last name</th>
+              <th>Code</th>
+              <th>Mac address</th>
+              <th>Address</th>
+              <th>Phone number</th>
+              <th>Active</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+              {% for i in user%}
+              <tr>
+                {% if i.is_superuser == False %}
+                <td>{{i.first_name}}</td>
+                <td>{{i.last_name}}</td>
+                <td>{{i.code}}</td>
+                <td>{{i.ip}}</td>
+                <td>{{i.address}}</td>
+                <td>{{i.phone_number}}</td>
+                <td><span class="{% if i.is_active == True %} badge badge-success {% else %} badge badge-danger {% endif %}">{{i.is_active}}</span></td>
+                <td>
+                  <a href="{% url 'userupdate' i.user_id %}"><i class="fas fa-edit"></i></a>
+                <a href="{% url 'userdelete' i.user_id %}"><i class="fas fa-trash-alt"></i></a>
+                <a href="{% url 'permissionadd' i.user_id %}"><i>Permission</i></a>
+                </td>
+                {% endif %}
+              </tr>
+              {% endfor %}
+              </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+  {% endblock %}
+
+  {% block js %}
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script>
+    $(function () {
+        $("#example1").DataTable({
+        "responsive": true,
+        "autoWidth": false,
+        });
+        $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        });
+    });
+    </script>
+  {% endblock %}
+</body>
+</html>

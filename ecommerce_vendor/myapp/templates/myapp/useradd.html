@@ -1,0 +1,182 @@
+{% extends 'myapp/base.html' %} <!-- Add this for inheritance -->
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome Home</title>
+</head>
+<body>
+  {% block content %}
+
+  <div class="content-header">
+    <div class="container-fluid">
+    </div>
+  </div>
+
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <!-- <h1>Profile</h1> -->
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="">Admin</a></li>
+            <li class="breadcrumb-item active"><a href="{% url 'userdetail' %}">user</a></li>
+            <li class="breadcrumb-item active">Add user</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+    <!-- {{request.user.username}} -->
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <!-- <h3 class="card-title">DataTable with minimal features & hover style</h3> -->
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <form role="form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="form-group col-sm-4">
+                            <label for="exampleInputEmail1">Username</label>
+                            {% if userupdate %}
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter first name" value="{{userupdate.username}}" readonly>
+                            {% else %}
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter first name" value="{{userupdate.username}}">
+                            {% endif %}
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="exampleInputEmail1">E-mail</label>
+                            {% if userupdate %}
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter first name" value="{{userupdate.email}}" readonly>
+                            {% else %}
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter first name" value="{{userupdate.email}}">
+                            {% endif %}
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="exampleInputEmail1">Password</label>
+                            {% if userupdate %}
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter first name" value="{{userupdate.password}}" readonly>
+                            {% else %}
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter first name" value="{{userupdate.password}}">
+                            {% endif %}
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col-sm-4">
+                          <label for="exampleInputEmail1">First name</label>
+                          <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter first name" value="{{userupdate.first_name}}">
+                        </div>
+                        <div class="form-group col-sm-4">
+                          <label for="exampleInputEmail1">Last name</label>
+                          <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter last name" value="{{userupdate.last_name}}">
+                        </div>
+                        <div class="form-group col-sm-4">
+                          <label>Active</label>
+                          <select class="form-control" name="is_active" data-placeholder="Select a State" style="width: 100%;">
+                            <option>---Select Active---</option>
+                            <option {% if userupdate.is_active == True %} selected {% endif %} value="True">Yes</option>
+                            <option {% if userupdate.is_active == False %} selected {% endif %} value="False">No</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col-sm-4">
+                          <label for="exampleInputEmail1">code</label>
+                          <input type="text" class="form-control" id="code" name="code" placeholder="Enter code" value="{{userupdate.code}}">
+                        </div>
+                        <div class="form-group col-sm-4">
+                          <label for="exampleInputEmail1">Address</label>
+                          <input type="text" class="form-control" id="address" name="address" placeholder="Enter address" value="{{userupdate.address}}">
+                        </div>
+                        <div class="form-group col-sm-4">
+                          <label for="exampleInputEmail1">Phone number</label>
+                          <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Enter phone number" value="{{userupdate.phone_number}}">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col-sm-5">
+                          <label>User group</label>
+                          <select class="form-control" name="user_group_id" data-placeholder="Select a State" style="width: 100%;">
+                            <option>--- select usergroup ---</option>
+                            {% for i in usergroup %}
+                            <option {% if userupdate.user_group_id.group_id == i.group_id%} selected {% endif %} value="{{i.group_id}}">{{i.name}}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                        <div class="form-group col-sm-5">
+                          <label>Role</label>
+                          <select class="form-control" name="role_id" data-placeholder="Select a State" style="width: 100%;">
+                            <option>--- select role ---</option>
+                            {% for i in role %}
+                            <option {% if userupdate.role_id.role_id == i.role_id%} selected {% endif %} value="{{i.role_id}}">{{i.name}}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col-sm-6">
+                          <label for="email">Image</label>
+                            <input type="file" class="form-control" id="avatar" name="avatar">
+                            {% if userupdate %}
+                            <img class="profile-user-img img-fluid img-circle"
+                              src="{{userupdate.avatar.url}}"
+                              alt="User profile picture">
+                            {% endif %}
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col-sm-4" hidden>
+                          <label for="email" class="col-sm-3 col-form-label">Created By</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" id="email" name="created_by" placeholder="Email" value="{% if userupdate.created_by %} {{userupdate.created_by}} {% else %} {{request.user.user_id}} {% endif %}">
+                          </div>
+                        </div>
+                        <div class="form-group col-sm-4" hidden>
+                          <label for="email" class="col-sm-3 col-form-label">Modified By</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" id="email" name="modified_by" placeholder="Email" value="{{request.user.user_id}}">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                      <button type="submit" class="btn btn-primary">{% if userupdate %}Update{% else %}Submit{% endif %}</button>
+                    </div>
+                  </form>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+  <!-- /.content -->
+  {% endblock %}
+
+  {% block js %}
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+  <script>
+    $(function () {
+      // Summernote
+    //   $('.textarea').summernote()
+    })
+  </script>
+  
+  {% endblock %}
+</body>
+</html>
